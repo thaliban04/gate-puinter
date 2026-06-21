@@ -538,19 +538,44 @@
   .pillar svg { margin-bottom: 0; width: 24px; height: 24px; flex-shrink: 0; }
 }
 
-.team-card {
-  background: transparent;
-  border: none;
+.team-table-wrap {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background: var(--card);
+  border: 1px solid var(--border-med);
   border-radius: var(--radius);
-  padding: 24px;
-  display: inline-block;
-  text-align: left;
-  min-width: 280px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.team-row { display: flex; justify-content: space-between; gap: 20px; padding: 6px 0; border-bottom: 1px solid var(--border); }
-.team-row:last-child { border-bottom: none; }
-.team-key { font-size: 0.78rem; color: var(--text3); }
-.team-val { font-size: 0.82rem; font-weight: 500; }
+.team-table-wrap:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+.team-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.team-table th {
+  background: var(--bg);
+  padding: 16px 24px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-med);
+}
+.team-table td {
+  padding: 16px 24px;
+  font-size: 0.95rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+.team-table tr:last-child td {
+  border-bottom: none;
+}
 
 /* ===== RESPONSIVE SECTION ===== */
 @media (max-width: 960px) {
@@ -1024,7 +1049,7 @@
 /* RESPONSIVE */
 @media (max-width: 960px) {
   .mp-top { flex-direction: column; }
-  .mp-photo-box { width: 100%; height: 300px; min-height: auto; }
+  .mp-photo-box { width: 100%; height: auto; aspect-ratio: 1/1; min-height: auto; }
   .mp-middle { flex-direction: column; }
   .mp-personal-box { border-right: none; border-bottom: 1px solid var(--border-med); }
   .mp-goals-grid, .mp-challenges-grid { grid-template-columns: 1fr; }

@@ -101,6 +101,23 @@
     </div>
   </div>
 
+  <!-- Text Editor Modal -->
+  <div id="textEditorModal" class="cropper-modal">
+    <div class="text-editor-modal-content">
+      <div class="text-editor-header">
+        Edit Data Kelompok
+      </div>
+      <div class="text-editor-body">
+        <div class="text-editor-help">Ketik 1 anggota per baris. Format: <strong>Nama - NRP</strong></div>
+        <textarea id="textEditorInput" placeholder="Contoh:&#10;Budi Santoso - 05111940000001&#10;Ani - 05111940000002"></textarea>
+      </div>
+      <div class="cropper-modal-actions">
+        <button id="textEditorCancel" class="btn btn-outline" style="flex:1;">Batal</button>
+        <button id="textEditorDone" class="btn btn-primary" style="flex:1;">Selesai & Upload</button>
+      </div>
+    </div>
+  </div>
+
   <!-- JS -->
   <script src="js/nav.js"></script>
   <script src="js/animations.js"></script>

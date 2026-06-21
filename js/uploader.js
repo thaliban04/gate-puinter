@@ -7,9 +7,14 @@ let cropper = null;
 let currentUploadId = null;
 let currentUploaderEl = null;
 
-document.addEventListener('modulesLoaded', () => {
-  const uploaders = document.querySelectorAll('.secret-uploader');
+// Variabel Global untuk Text Editor
+let currentTextUploadId = null;
 
+document.addEventListener('modulesLoaded', () => {
+  // ======================================
+  // 1. LOGIKA IMAGE UPLOADER
+  // ======================================
+  const uploaders = document.querySelectorAll('.secret-uploader');
   uploaders.forEach(el => {
     const id = el.getAttribute('data-upload-id');
     
@@ -29,50 +34,91 @@ document.addEventListener('modulesLoaded', () => {
       el.appendChild(imgOverlay);
     }
 
-    // 1. Coba load dari LocalStorage untuk instant preview (sangat cepat)
+    // Coba load dari LocalStorage
     const localData = localStorage.getItem('gate-upload-' + id);
     if (localData) {
       imgOverlay.src = localData;
     } else {
-      // 2. Jika tidak ada di lokal, coba ambil dari GitHub public URL
+      // Fetch dari GitHub public
       imgOverlay.src = `img/uploads/${id}.png?v=${Date.now()}`;
     }
 
-    // ======================================
-    // LOGIKA 10X TAP
-    // ======================================
     let clickCount = 0;
     let lastClickTime = 0;
 
     const handleTap = (e) => {
-      // Hanya izinkan tap/klik secara langsung (mencegah double trigger di mobile)
       e.preventDefault(); 
       e.stopPropagation();
-
       const currentTime = new Date().getTime();
       
-      // Reset hitungan jika jeda antar tap lebih dari 500ms (setengah detik)
-      if (currentTime - lastClickTime > 500) {
-        clickCount = 0;
-      }
+      if (currentTime - lastClickTime > 500) clickCount = 0;
       
       clickCount++;
       lastClickTime = currentTime;
 
       if (clickCount === 10) {
-        clickCount = 0; // Reset setelah berhasil
+        clickCount = 0;
         startUploadProcess(el, id);
       }
     };
-
-    // Tambahkan event pendeteksi klik/tap
-    // Kita gunakan onclick agar kompatibel di Desktop & Mobile
     el.addEventListener('click', handleTap);
   });
 
-  // Setup Modal Tombol
-  document.getElementById('cropperCancel').addEventListener('click', closeCropperModal);
-  document.getElementById('cropperDone').addEventListener('click', finishCropAndUpload);
+  // Setup Modal Cropper
+  document.getElementById('cropperCancel')?.addEventListener('click', closeCropperModal);
+  document.getElementById('cropperDone')?.addEventListener('click', finishCropAndUpload);
+
+
+  // ======================================
+  // 2. LOGIKA TEXT EDITOR (Team Table)
+  // ======================================
+  const textEditors = document.querySelectorAll('.secret-text-editor');
+  textEditors.forEach(el => {
+    const id = el.getAttribute('data-text-id');
+
+    // Coba load dari LocalStorage
+    const localData = localStorage.getItem('gate-text-' + id);
+    if (localData) {
+      renderTeamTable(localData);
+    } else {
+      // Fetch dari GitHub API (karena file json harus di parse)
+      fetch(`https://api.github.com/repos/thaliban04/gate-puinter/contents/data/${id}.json?v=${Date.now()}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.content) {
+            // Decode base64
+            const jsonStr = decodeURIComponent(escape(atob(data.content)));
+            renderTeamTable(jsonStr);
+            // Simpan ke cache lokal
+            localStorage.setItem('gate-text-' + id, jsonStr);
+          }
+        }).catch(e => {
+          console.log("No remote team data found yet.");
+        });
+    }
+
+    let clickCount = 0;
+    let lastClickTime = 0;
+
+    const handleTap = (e) => {
+      e.preventDefault(); 
+      e.stopPropagation();
+      const currentTime = new Date().getTime();
+      if (currentTime - lastClickTime > 500) clickCount = 0;
+      clickCount++;
+      lastClickTime = currentTime;
+
+      if (clickCount === 10) {
+        clickCount = 0;
+        openTextEditorModal(id);
+      }
+    };
+    el.addEventListener('click', handleTap);
+  });
+
+  // Setup Modal Text Editor
+  document.getElementById('textEditorCancel')?.addEventListener('click', closeTextEditorModal);
+  document.getElementById('textEditorDone')?.addEventListener('click', finishTextEditorAndUpload);
 });
 
 // =============================================================================
@@ -89,9 +135,7 @@ async function uploadToGitHub(id, base64Data) {
   
   let sha = null;
   try {
-    const getRes = await fetch(url, {
-      headers: { 'Authorization': `token ${token}` }
-    });
+    const getRes = await fetch(url, { headers: { 'Authorization': `token ${token}` } });
     if (getRes.ok) {
       const data = await getRes.json();
       sha = data.sha;
@@ -108,26 +152,55 @@ async function uploadToGitHub(id, base64Data) {
   try {
     const putRes = await fetch(url, {
       method: 'PUT',
-      headers: {
-        'Authorization': `token ${token}`,
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
     });
     return putRes.ok;
-  } catch(e) {
-    return false;
-  }
+  } catch(e) { return false; }
+}
+
+async function uploadTextToGitHub(id, textContent) {
+  const token = localStorage.getItem('gate-github-token');
+  if (!token) return false;
+  
+  // Encode string ke base64 (UTF-8 safe)
+  const b64 = btoa(unescape(encodeURIComponent(textContent)));
+  const path = `data/${id}.json`;
+  const url = `https://api.github.com/repos/thaliban04/gate-puinter/contents/${path}`;
+  
+  let sha = null;
+  try {
+    const getRes = await fetch(url, { headers: { 'Authorization': `token ${token}` } });
+    if (getRes.ok) {
+      const data = await getRes.json();
+      sha = data.sha;
+    }
+  } catch(e) {}
+  
+  const body = {
+    message: `Auto-upload text: ${id}.json via Text Editor UI`,
+    content: b64,
+    branch: 'main'
+  };
+  if (sha) body.sha = sha;
+  
+  try {
+    const putRes = await fetch(url, {
+      method: 'PUT',
+      headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    return putRes.ok;
+  } catch(e) { return false; }
 }
 
 // =============================================================================
-// ALUR UTAMA: BUKA INPUT FILE -> BUKA MODAL CROPPER -> UPLOAD
+// IMAGE CROPPER LOGIC
 // =============================================================================
 async function startUploadProcess(el, id) {
-  // 1. Minta Token GitHub
   let token = localStorage.getItem('gate-github-token');
   if (!token) {
-    token = prompt("🔒 FITUR ADMIN RAHASIA (Mode Editor) 🔒\n\nMasukkan 'GitHub Access Token' Anda untuk mengaktifkan fitur ini:");
+    token = prompt("🔒 FITUR ADMIN RAHASIA 🔒\n\nMasukkan 'GitHub Access Token':");
     if (!token || token.trim() === "") return;
     localStorage.setItem('gate-github-token', token.trim());
   }
@@ -135,7 +208,6 @@ async function startUploadProcess(el, id) {
   currentUploadId = id;
   currentUploaderEl = el;
 
-  // 2. Buat tombol input file
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = 'image/*';
@@ -143,102 +215,140 @@ async function startUploadProcess(el, id) {
   input.onchange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    
-    // Buka gambar dan tampilkan di modal Cropper
     const reader = new FileReader();
-    reader.onload = (ev) => {
-      openCropperModal(ev.target.result, el);
-    };
+    reader.onload = (ev) => { openCropperModal(ev.target.result, el); };
     reader.readAsDataURL(file);
   };
-  
   input.click();
 }
 
-// =============================================================================
-// CROPPER MODAL LOGIC
-// =============================================================================
 function openCropperModal(imageSrc, el) {
   const modal = document.getElementById('cropperModal');
   const imageElement = document.getElementById('cropperImage');
-  
   imageElement.src = imageSrc;
   modal.classList.add('show');
 
-  // Hapus cropper lama jika ada
-  if (cropper) {
-    cropper.destroy();
-  }
+  if (cropper) cropper.destroy();
 
-  // Tentukan rasio crop berdasarkan bentuk elemen target
-  // Jika target berbentuk bundar (border-radius: 50%), kita set rasio 1:1
   const styles = window.getComputedStyle(el);
   const isCircle = styles.borderRadius === '50%';
-  
-  // Hitung rasio aspek (Width / Height) dari kotak asli agar tidak gepeng
   const rect = el.getBoundingClientRect();
   const aspectRatio = isCircle ? 1 : (rect.width / rect.height);
 
-  // Inisialisasi Mesin Cropper.js
   cropper = new Cropper(imageElement, {
     aspectRatio: aspectRatio,
-    viewMode: 1,      // Batasi crop box di dalam ukuran kanvas
-    dragMode: 'move', // Mengizinkan pengguna menggeser (pan) gambar
-    background: false,
-    autoCropArea: 1,  // Penuhi seluruh area
-    responsive: true,
-    restore: false,
-    guides: true,
-    center: true,
-    highlight: false,
-    cropBoxMovable: true,
-    cropBoxResizable: true,
-    toggleDragModeOnDblclick: false,
+    viewMode: 1, dragMode: 'move', background: false, autoCropArea: 1,
+    responsive: true, restore: false, guides: true, center: true, highlight: false,
+    cropBoxMovable: true, cropBoxResizable: true, toggleDragModeOnDblclick: false,
   });
 }
 
 function closeCropperModal() {
-  const modal = document.getElementById('cropperModal');
-  modal.classList.remove('show');
-  if (cropper) {
-    cropper.destroy();
-    cropper = null;
-  }
+  document.getElementById('cropperModal').classList.remove('show');
+  if (cropper) { cropper.destroy(); cropper = null; }
 }
 
 async function finishCropAndUpload() {
   if (!cropper) return;
-  
-  // Ambil hasil crop menjadi gambar Canvas
   const canvas = cropper.getCroppedCanvas({
-    // Batasi ukuran maksimal agar file tidak membengkak
-    maxWidth: 1024,
-    maxHeight: 1024,
-    fillColor: '#fff',
-    imageSmoothingEnabled: true,
-    imageSmoothingQuality: 'high',
+    maxWidth: 1024, maxHeight: 1024, fillColor: '#fff',
+    imageSmoothingEnabled: true, imageSmoothingQuality: 'high',
   });
-
-  // Konversi kanvas ke Base64 (PNG)
   const b64 = canvas.toDataURL('image/png');
   closeCropperModal();
 
-  // 1. INSTANT PREVIEW (Tampilkan langsung di halaman)
   localStorage.setItem('gate-upload-' + currentUploadId, b64);
   let imgOverlay = currentUploaderEl.querySelector('.upload-overlay');
-  if(imgOverlay) {
-    imgOverlay.src = b64;
-    imgOverlay.style.display = 'block';
-  }
+  if(imgOverlay) { imgOverlay.src = b64; imgOverlay.style.display = 'block'; }
   
-  // 2. UPLOAD KE GITHUB
   currentUploaderEl.style.opacity = '0.5';
   const success = await uploadToGitHub(currentUploadId, b64);
   currentUploaderEl.style.opacity = '1';
   
-  if (success) {
-    alert("✅ Gambar berhasil di-crop dan tersinkronisasi ke GitHub!\nPerubahan akan terlihat oleh publik dalam ~1 menit.");
+  if (success) alert("✅ Gambar berhasil tersinkronisasi ke GitHub!");
+  else alert("❌ Gagal mengunggah ke GitHub. Cek token Anda.");
+}
+
+// =============================================================================
+// TEXT EDITOR LOGIC (TEAM TABLE)
+// =============================================================================
+function renderTeamTable(jsonStr) {
+  try {
+    const arr = JSON.parse(jsonStr);
+    const tbody = document.getElementById('teamTableBody');
+    if (!tbody || !Array.isArray(arr)) return;
+    
+    tbody.innerHTML = '';
+    arr.forEach(item => {
+      const tr = document.createElement('tr');
+      const td1 = document.createElement('td');
+      const td2 = document.createElement('td');
+      td1.textContent = item.nama || 'Unknown';
+      td2.textContent = item.nrp || '-';
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      tbody.appendChild(tr);
+    });
+  } catch(e) {
+    console.error("Gagal merender tabel:", e);
+  }
+}
+
+function openTextEditorModal(id) {
+  let token = localStorage.getItem('gate-github-token');
+  if (!token) {
+    token = prompt("🔒 FITUR ADMIN RAHASIA 🔒\n\nMasukkan 'GitHub Access Token':");
+    if (!token || token.trim() === "") return;
+    localStorage.setItem('gate-github-token', token.trim());
+  }
+
+  currentTextUploadId = id;
+  const modal = document.getElementById('textEditorModal');
+  const textarea = document.getElementById('textEditorInput');
+  
+  // Convert JSON to text representation
+  const localData = localStorage.getItem('gate-text-' + id);
+  if (localData) {
+    try {
+      const arr = JSON.parse(localData);
+      textarea.value = arr.map(item => `${item.nama} - ${item.nrp}`).join('\n');
+    } catch(e) { textarea.value = ''; }
   } else {
-    alert("❌ Gagal mengunggah ke GitHub. Token mungkin salah atau kadaluarsa.");
+    textarea.value = '';
+  }
+  
+  modal.classList.add('show');
+}
+
+function closeTextEditorModal() {
+  document.getElementById('textEditorModal').classList.remove('show');
+}
+
+async function finishTextEditorAndUpload() {
+  const textarea = document.getElementById('textEditorInput');
+  const lines = textarea.value.split('\n').map(l => l.trim()).filter(l => l);
+  
+  const arr = lines.map(line => {
+    // Pisahkan berdasarkan tanda hubung (dash)
+    const parts = line.split('-');
+    return {
+      nama: parts[0] ? parts[0].trim() : 'Tanpa Nama',
+      nrp: parts[1] ? parts[1].trim() : '-'
+    };
+  });
+  
+  const jsonStr = JSON.stringify(arr, null, 2);
+  
+  // 1. Instant Render & Save Local
+  renderTeamTable(jsonStr);
+  localStorage.setItem('gate-text-' + currentTextUploadId, jsonStr);
+  closeTextEditorModal();
+  
+  // 2. Upload to GitHub
+  const success = await uploadTextToGitHub(currentTextUploadId, jsonStr);
+  if (success) {
+    alert("✅ Data kelompok berhasil diperbarui dan tersinkronisasi ke GitHub!");
+  } else {
+    alert("❌ Gagal mengunggah data ke GitHub. Cek token Anda.");
   }
 }

@@ -19,18 +19,24 @@
       </div>
     </div>
 
-    <div class="team-card">
-      <div class="team-row">
-        <div class="team-key">Nama</div>
-        <div class="team-val" style="color: var(--text3); font-style: italic;">— Silakan isi nama Anda —</div>
-      </div>
-      <div class="team-row">
-        <div class="team-key">NIM</div>
-        <div class="team-val" style="color: var(--text3); font-style: italic;">— Silakan isi NIM Anda —</div>
-      </div>
-      <div class="team-row">
-        <div class="team-key">Mata Kuliah</div>
-        <div class="team-val">Kewirausahaan Berbasis Teknologi</div>
+    <div class="team-table-wrap secret-text-editor reveal" data-text-id="team-data" style="cursor: pointer; position: relative;">
+      <table class="team-table">
+        <thead>
+          <tr>
+            <th>Nama Anggota</th>
+            <th>NRP</th>
+          </tr>
+        </thead>
+        <tbody id="teamTableBody">
+          <!-- Fallback Data -->
+          <tr>
+            <td style="color: var(--text3); font-style: italic;">Silakan isi nama Anda</td>
+            <td style="color: var(--text3); font-style: italic;">—</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="padding: 12px; font-size: 0.75rem; color: var(--text3); text-align: center; background: var(--bg); border-top: 1px solid var(--border-med);">
+        <i data-lucide="edit-3" style="width:14px;height:14px;vertical-align:middle;margin-right:4px;"></i> Tap 10x untuk mengedit data anggota kelompok
       </div>
     </div>
   </div>
