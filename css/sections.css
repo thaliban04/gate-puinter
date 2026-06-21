@@ -599,6 +599,18 @@
     margin: 0 -20px;
     padding: 0 20px;
   }
+  
+  .ujm-persona-bar {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+  .ujm-divider {
+    display: none;
+  }
+  .ujm-scenario-text {
+    width: 100%;
+  }
 }
 
 @media (max-width: 480px) {
