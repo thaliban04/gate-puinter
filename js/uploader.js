@@ -1,6 +1,11 @@
 // =============================================================================
-// UPLOADER.JS — Fitur Rahasia: Long-Press Image Upload (GitHub API)
+// UPLOADER.JS — Fitur Rahasia: 10x Tap & Cropper Image Upload (GitHub API)
 // =============================================================================
+
+// Variabel Global untuk Cropper
+let cropper = null;
+let currentUploadId = null;
+let currentUploaderEl = null;
 
 document.addEventListener('modulesLoaded', () => {
   const uploaders = document.querySelectorAll('.secret-uploader');
@@ -13,11 +18,12 @@ document.addEventListener('modulesLoaded', () => {
     if (!imgOverlay) {
       imgOverlay = document.createElement('img');
       imgOverlay.className = 'upload-overlay';
-      imgOverlay.style.cssText = 'position: absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:10; display:none; background:var(--card);';
+      // Mencegah gambar tertarik/gepeng, kita pakai object-fit cover
+      imgOverlay.style.cssText = 'position: absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:10; display:none; background:var(--card); pointer-events:none;';
       
       // Jika gambar error (tidak ditemukan di GitHub), hilangkan overlay agar placeholder asli terlihat
       imgOverlay.onerror = function() { this.style.display = 'none'; };
-      // Jika gambar sukses diload, tampilkan menutupi placeholder
+      // Jika gambar sukses diload, tampilkan
       imgOverlay.onload = function() { this.style.display = 'block'; };
       
       el.appendChild(imgOverlay);
@@ -29,49 +35,58 @@ document.addEventListener('modulesLoaded', () => {
       imgOverlay.src = localData;
     } else {
       // 2. Jika tidak ada di lokal, coba ambil dari GitHub public URL
-      // (Ditambahkan cache-buster agar selalu memuat gambar terbaru setelah diupload)
       imgOverlay.src = `img/uploads/${id}.png?v=${Date.now()}`;
     }
 
     // ======================================
-    // LOGIKA LONG PRESS (2 DETIK)
+    // LOGIKA 10X TAP
     // ======================================
-    let pressTimer;
+    let clickCount = 0;
+    let lastClickTime = 0;
 
-    const startTimer = (e) => {
-      // Mencegah context menu muncul di mobile saat tahan lama
-      if(e.type === 'touchstart') {
-        // e.preventDefault(); // Kadang mengganggu scroll, lebih baik pakai touch-action CSS
+    const handleTap = (e) => {
+      // Hanya izinkan tap/klik secara langsung (mencegah double trigger di mobile)
+      e.preventDefault(); 
+      e.stopPropagation();
+
+      const currentTime = new Date().getTime();
+      
+      // Reset hitungan jika jeda antar tap lebih dari 500ms (setengah detik)
+      if (currentTime - lastClickTime > 500) {
+        clickCount = 0;
       }
-      pressTimer = window.setTimeout(() => startUploadProcess(el, id), 2000);
+      
+      clickCount++;
+      lastClickTime = currentTime;
+
+      if (clickCount === 10) {
+        clickCount = 0; // Reset setelah berhasil
+        startUploadProcess(el, id);
+      }
     };
 
-    const cancelTimer = () => {
-      clearTimeout(pressTimer);
-    };
-
-    // Event Desktop
-    el.addEventListener('mousedown', startTimer);
-    el.addEventListener('mouseup', cancelTimer);
-    el.addEventListener('mouseleave', cancelTimer);
-
-    // Event Mobile
-    el.addEventListener('touchstart', startTimer, {passive: true});
-    el.addEventListener('touchend', cancelTimer);
-    el.addEventListener('touchcancel', cancelTimer);
+    // Tambahkan event pendeteksi klik/tap
+    // Kita gunakan onclick agar kompatibel di Desktop & Mobile
+    el.addEventListener('click', handleTap);
   });
+
+  // Setup Modal Tombol
+  document.getElementById('cropperCancel').addEventListener('click', closeCropperModal);
+  document.getElementById('cropperDone').addEventListener('click', finishCropAndUpload);
 });
 
+// =============================================================================
+// GITHUB UPLOAD ENGINE
+// =============================================================================
 async function uploadToGitHub(id, base64Data) {
   const token = localStorage.getItem('gate-github-token');
   if (!token) return false;
   
-  // Ekstrak base64 murni tanpa prefix (data:image/png;base64,...)
+  // Ekstrak base64 murni tanpa prefix
   const b64 = base64Data.split(',')[1];
   const path = `img/uploads/${id}.png`;
   const url = `https://api.github.com/repos/thaliban04/gate-puinter/contents/${path}`;
   
-  // 1. Cek apakah file sudah ada di repo (Dapatkan SHA-nya untuk menimpa file)
   let sha = null;
   try {
     const getRes = await fetch(url, {
@@ -81,17 +96,14 @@ async function uploadToGitHub(id, base64Data) {
       const data = await getRes.json();
       sha = data.sha;
     }
-  } catch(e) {
-    console.log("File belum ada, akan membuat file baru.");
-  }
+  } catch(e) {}
   
-  // 2. Lakukan Upload / Update (PUT)
   const body = {
-    message: `Auto-upload image: ${id}.png via Web UI`,
+    message: `Auto-upload image: ${id}.png via Cropper UI`,
     content: b64,
     branch: 'main'
   };
-  if (sha) body.sha = sha; // Mutlak wajib jika file sudah ada sebelumnya
+  if (sha) body.sha = sha;
   
   try {
     const putRes = await fetch(url, {
@@ -108,59 +120,125 @@ async function uploadToGitHub(id, base64Data) {
   }
 }
 
+// =============================================================================
+// ALUR UTAMA: BUKA INPUT FILE -> BUKA MODAL CROPPER -> UPLOAD
+// =============================================================================
 async function startUploadProcess(el, id) {
-  // Minta Token GitHub jika perangkat belum menyimpannya
+  // 1. Minta Token GitHub
   let token = localStorage.getItem('gate-github-token');
   if (!token) {
-    token = prompt("🔒 FITUR ADMIN RAHASIA 🔒\n\nMasukkan 'GitHub Access Token' Anda untuk memberikan izin sinkronisasi Live ke Repositori:");
+    token = prompt("🔒 FITUR ADMIN RAHASIA (Mode Editor) 🔒\n\nMasukkan 'GitHub Access Token' Anda untuk mengaktifkan fitur ini:");
     if (!token || token.trim() === "") return;
     localStorage.setItem('gate-github-token', token.trim());
   }
   
-  // Buat tombol input file bayangan (tersembunyi)
+  currentUploadId = id;
+  currentUploaderEl = el;
+
+  // 2. Buat tombol input file
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = 'image/*';
   
-  // Saat file dipilih dari galeri/komputer
   input.onchange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
     
-    // Batasi ukuran maksimal 5MB (Rekomendasi GitHub API)
-    if (file.size > 5 * 1024 * 1024) {
-      alert("Ukuran gambar terlalu besar! Maksimal 5MB agar tidak membebani website.");
-      return;
-    }
-
+    // Buka gambar dan tampilkan di modal Cropper
     const reader = new FileReader();
-    reader.onload = async (ev) => {
-      const b64 = ev.target.result;
-      
-      // 1. INSTANT PREVIEW (Simpan di LocalStorage)
-      // Ini membuat gambar langsung terlihat di layar Anda tanpa jeda
-      localStorage.setItem('gate-upload-' + id, b64);
-      let imgOverlay = el.querySelector('.upload-overlay');
-      imgOverlay.src = b64;
-      
-      // 2. UPLOAD KE GITHUB (Sinkronisasi Global)
-      el.style.opacity = '0.5'; // Efek loading
-      const success = await uploadToGitHub(id, b64);
-      el.style.opacity = '1';
-      
-      if (success) {
-        alert("✅ Sinkronisasi Sukses!\n\nGambar telah diunggah ke GitHub. Orang lain akan dapat melihat gambar ini dalam 1-2 menit ke depan setelah GitHub memperbarui server.");
-      } else {
-        alert("❌ Gagal menembus repositori GitHub.\nPastikan Token Anda masih valid dan memiliki izin 'repo' atau 'contents:write'.");
-        if (confirm("Apakah Anda ingin mereset/menghapus Token yang tersimpan di perangkat ini?")) {
-           localStorage.removeItem('gate-github-token');
-        }
-      }
+    reader.onload = (ev) => {
+      openCropperModal(ev.target.result, el);
     };
-    // Ubah file gambar menjadi teks Base64
     reader.readAsDataURL(file);
   };
   
-  // Munculkan jendela pemilihan file
   input.click();
+}
+
+// =============================================================================
+// CROPPER MODAL LOGIC
+// =============================================================================
+function openCropperModal(imageSrc, el) {
+  const modal = document.getElementById('cropperModal');
+  const imageElement = document.getElementById('cropperImage');
+  
+  imageElement.src = imageSrc;
+  modal.classList.add('show');
+
+  // Hapus cropper lama jika ada
+  if (cropper) {
+    cropper.destroy();
+  }
+
+  // Tentukan rasio crop berdasarkan bentuk elemen target
+  // Jika target berbentuk bundar (border-radius: 50%), kita set rasio 1:1
+  const styles = window.getComputedStyle(el);
+  const isCircle = styles.borderRadius === '50%';
+  
+  // Hitung rasio aspek (Width / Height) dari kotak asli agar tidak gepeng
+  const rect = el.getBoundingClientRect();
+  const aspectRatio = isCircle ? 1 : (rect.width / rect.height);
+
+  // Inisialisasi Mesin Cropper.js
+  cropper = new Cropper(imageElement, {
+    aspectRatio: aspectRatio,
+    viewMode: 1,      // Batasi crop box di dalam ukuran kanvas
+    dragMode: 'move', // Mengizinkan pengguna menggeser (pan) gambar
+    background: false,
+    autoCropArea: 1,  // Penuhi seluruh area
+    responsive: true,
+    restore: false,
+    guides: true,
+    center: true,
+    highlight: false,
+    cropBoxMovable: true,
+    cropBoxResizable: true,
+    toggleDragModeOnDblclick: false,
+  });
+}
+
+function closeCropperModal() {
+  const modal = document.getElementById('cropperModal');
+  modal.classList.remove('show');
+  if (cropper) {
+    cropper.destroy();
+    cropper = null;
+  }
+}
+
+async function finishCropAndUpload() {
+  if (!cropper) return;
+  
+  // Ambil hasil crop menjadi gambar Canvas
+  const canvas = cropper.getCroppedCanvas({
+    // Batasi ukuran maksimal agar file tidak membengkak
+    maxWidth: 1024,
+    maxHeight: 1024,
+    fillColor: '#fff',
+    imageSmoothingEnabled: true,
+    imageSmoothingQuality: 'high',
+  });
+
+  // Konversi kanvas ke Base64 (PNG)
+  const b64 = canvas.toDataURL('image/png');
+  closeCropperModal();
+
+  // 1. INSTANT PREVIEW (Tampilkan langsung di halaman)
+  localStorage.setItem('gate-upload-' + currentUploadId, b64);
+  let imgOverlay = currentUploaderEl.querySelector('.upload-overlay');
+  if(imgOverlay) {
+    imgOverlay.src = b64;
+    imgOverlay.style.display = 'block';
+  }
+  
+  // 2. UPLOAD KE GITHUB
+  currentUploaderEl.style.opacity = '0.5';
+  const success = await uploadToGitHub(currentUploadId, b64);
+  currentUploaderEl.style.opacity = '1';
+  
+  if (success) {
+    alert("✅ Gambar berhasil di-crop dan tersinkronisasi ke GitHub!\nPerubahan akan terlihat oleh publik dalam ~1 menit.");
+  } else {
+    alert("❌ Gagal mengunggah ke GitHub. Token mungkin salah atau kadaluarsa.");
+  }
 }

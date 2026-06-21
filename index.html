@@ -8,8 +8,10 @@
   <link rel="stylesheet" href="css/base.css?v=25">
   <link rel="stylesheet" href="css/layout.css?v=25">
   <link rel="stylesheet" href="css/sections.css?v=25">
-  <link rel="stylesheet" href="css/animations.css?v=25">
-  <link rel="stylesheet" href="css/components.css?v=25">
+  <link rel="stylesheet" href="css/animations.css?v=26">
+  <link rel="stylesheet" href="css/components.css?v=26">
+  <!-- Cropper.js CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
   <!-- Chart.js & Lucide Icons -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -86,12 +88,27 @@
 
   <main class="main-content" id="mainContent"></main>
 
+  <!-- Cropper Modal -->
+  <div id="cropperModal" class="cropper-modal">
+    <div class="cropper-modal-content">
+      <div class="cropper-container-wrapper">
+        <img id="cropperImage" src="" alt="Cropper">
+      </div>
+      <div class="cropper-modal-actions">
+        <button id="cropperCancel" class="btn btn-outline" style="flex:1;">Batal</button>
+        <button id="cropperDone" class="btn btn-primary" style="flex:1;">Selesai & Upload</button>
+      </div>
+    </div>
+  </div>
+
   <!-- JS -->
   <script src="js/nav.js"></script>
   <script src="js/animations.js"></script>
   <script src="js/charts.js"></script>
   <script src="js/module-loader.js"></script>
-  <script src="js/uploader.js"></script>
+  <!-- Cropper.js & Uploader -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+  <script src="js/uploader.js?v=2"></script>
   <script>
     // Initialize Lucide icons
     lucide.createIcons();
