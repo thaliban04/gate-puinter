@@ -575,7 +575,30 @@
     display: block;
   }
 
-  .rating-label { width: 130px; }
+  /* Empathy Map Mobile Optimization */
+  .em-upper {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 32px 20px;
+  }
+  .em-lines {
+    display: none; /* Sembunyikan garis diagonal di layar kecil */
+  }
+  .em-think, .em-hear, .em-see, .em-say {
+    max-width: 100%;
+  }
+  .em-avatar-circle {
+    width: 80px;
+    height: 80px;
+    font-size: 2rem;
+  }
+  .em-center { margin: 0; }
+  
+  .ujm-table-container {
+    margin: 0 -20px;
+    padding: 0 20px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -598,6 +621,13 @@
   border-radius: var(--radius);
   padding: 20px 24px;
   margin-bottom: 32px;
+}
+
+.ujm-table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -16px;
+  padding: 0 16px;
 }
 .ujm-avatar {
   width: 64px; height: 64px;
