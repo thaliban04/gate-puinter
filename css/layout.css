@@ -283,7 +283,11 @@
   }
   .navbar-brand { flex: 1; min-width: 0; }
   .brand-name { font-size: 1rem; }
-  .brand-sub { display: none; }
+  .brand-sub { 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+  }
   .container { padding: 0 20px; }
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
   .section { padding: 72px 0; }
