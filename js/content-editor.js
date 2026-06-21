@@ -17,9 +17,13 @@ document.addEventListener('modulesLoaded', () => {
     initContentEditable(el);
   });
 
-  // Wire up modal Save button
+  // Wire up modal buttons
   document.getElementById('contentEditorDone')
     ?.addEventListener('click', finishContentEdit);
+  document.getElementById('contentEditorCancel')
+    ?.addEventListener('click', closeContentEditorModal);
+  document.getElementById('contentEditorClose')
+    ?.addEventListener('click', closeContentEditorModal);
 });
 
 function initContentEditable(el) {
@@ -74,7 +78,9 @@ function applyContent(el, id, type, data) {
   if (type === 'text') {
     // data = { html: "..." }
     const target = el.querySelector('[data-editable-target]') || el;
-    if (data.html !== undefined) target.innerHTML = data.html;
+    if (data.html !== undefined) {
+      target.innerHTML = window.DOMPurify ? DOMPurify.sanitize(data.html) : data.html;
+    }
   } else if (type === 'table') {
     // data = { headers: [...], rows: [[...], ...] }
     const table = el.querySelector('table');
@@ -349,9 +355,9 @@ async function finishContentEdit() {
     const htmlVal = ta.value !== undefined ? ta.value : ta.innerHTML;
     data = { html: htmlVal };
 
-    // Apply to DOM immediately
+    // Apply to DOM immediately safely
     const target = currentEditEl.querySelector('[data-editable-target]') || currentEditEl;
-    target.innerHTML = htmlVal;
+    target.innerHTML = window.DOMPurify ? DOMPurify.sanitize(htmlVal) : htmlVal;
 
   } else if (currentEditType === 'table') {
     // Collect final values from inputs
