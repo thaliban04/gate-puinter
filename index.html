@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GATE PUINTER — Inovasi Keamanan LPR</title>
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="css/base.css?v=18">
-  <link rel="stylesheet" href="css/layout.css?v=18">
-  <link rel="stylesheet" href="css/sections.css?v=18">
-  <link rel="stylesheet" href="css/animations.css?v=18">
-  <link rel="stylesheet" href="css/components.css?v=18">
+  <link rel="stylesheet" href="css/base.css?v=19">
+  <link rel="stylesheet" href="css/layout.css?v=19">
+  <link rel="stylesheet" href="css/sections.css?v=19">
+  <link rel="stylesheet" href="css/animations.css?v=19">
+  <link rel="stylesheet" href="css/components.css?v=19">
 
   <!-- Chart.js & Lucide Icons -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -18,9 +18,14 @@
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
   <script>
     mermaid.initialize({ 
-      startOnLoad: true, 
+      startOnLoad: false, 
       theme: 'dark',
       flowchart: { curve: 'linear' }
+    });
+
+    // Jalankan Mermaid secara manual HANYA SETELAH semua partials selesai dimuat
+    document.addEventListener('modulesLoaded', () => {
+      mermaid.run({ querySelector: '.mermaid' }).catch(err => console.error(err));
     });
   </script>
 </head>
