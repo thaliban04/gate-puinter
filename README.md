@@ -1,64 +1,59 @@
-# 🚀 GATE PUINTER: Smart LPR System
+# GATE PUINTER: Smart LPR System
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![Status](https://img.shields.io/badge/status-Production%20Ready-success.svg)
-![Architecture](https://img.shields.io/badge/architecture-Vanilla%20JS%20%2B%20Modular%20HTML-orange.svg)
 
-**GATE PUINTER** adalah sistem pendarat (*landing page*) dan portal manajemen presentasi interaktif untuk proyek inovasi gerbang cerdas berbasis *License Plate Recognition* (LPR). Proyek ini dibangun dengan filosofi **"Zero-Dependency Runtime"**, menghadirkan antarmuka pengguna premium, performa secepat kilat, dan keamanan tingkat produksi tanpa bergantung pada *framework* kelas berat seperti React atau Vue.
-
----
-
-## ✨ Fitur Unggulan
-
-### 🎨 Antarmuka Premium (*Aesthetics & UI*)
-- **Floating Pill Navbar**: Navigasi cerdas yang melayang dengan *layered depth shadow* dan adaptif secara responsif.
-- **Micro-Animations & Scroll Reveal**: Akselerasi GPU perangkat keras (`will-change: transform, opacity`) untuk memastikan animasi *fade-in* sangat mulus pada layar *smartphone* menengah ke bawah.
-- **Light / Dark Mode**: Pergantian tema dinamis yang secara cerdas mendeteksi preferensi sistem pengguna (*prefers-color-scheme*).
-- **Mobile First & Optical Alignment**: Setiap radius konsentris dan tatanan *grid* didesain agar tidak merusak struktur proporsional layar sentuh (mendukung horizontal geser pada tabel panjang).
-
-### ⚡ Performa Kinerja Tingkat Lanjut
-- **Parallel Module Fetching**: Komponen-komponen *website* (Hero, Latar Belakang, Solusi, SWOT, Persona, Data) dimuat secara paralel menggunakan `Promise.all` demi pencapaian *First Contentful Paint* (FCP) di bawah 1 detik.
-- **Native Lazy Loading**: Seluruh aset visual selain *Hero Section* dikunci dengan `loading="lazy"` dikombinasikan dengan transisi saturasi (*opacity 0 -> 1*) guna menghemat pengeluaran *bandwidth* secara masif.
-
-
-### 🛡 Keamanan Standar Industri (Hardening)
-- **Strict Content Security Policy (CSP)**: Peraturan ketat pada eksekusi dokumen. Memblokir sumber skrip silang (*Cross-Site Scripting/XSS*) dari wilayah *domain* asing yang tidak terotorisasi.
-- **DOMPurify Integration**: Sanitasi ganda berbasis *runtime* untuk memastikan setiap konten JSON yang diambil dari *GitHub Cloud* bebas dari injeksi *payload* HTML yang berbahaya.
+GATE PUINTER adalah halaman pendarat (*landing page*) dan portal presentasi interaktif untuk proyek inovasi gerbang cerdas berbasis *License Plate Recognition* (LPR). Dibangun menggunakan *Vanilla JavaScript* dan HTML modular.
 
 ---
 
-## 🛠 Arsitektur & Direktori Proyek
+## Fitur Utama
 
-Proyek ini tidak memerlukan proses `npm run build` yang rumit. Cukup layani berkas statis dari *server* lokal Anda.
+### Antarmuka Pengguna
+- **Floating Pill Navbar**: Navigasi responsif dengan efek bayangan berlapis.
+- **Scroll Reveal**: Animasi *fade-in* yang diakselerasi oleh perangkat keras (`will-change: transform, opacity`).
+- **Tema Terang / Gelap**: Pergantian tema dinamis berdasarkan preferensi sistem (`prefers-color-scheme`).
+- **Mobile First**: Tata letak dan grid didesain agar tetap proporsional pada layar sentuh.
+
+### Performa
+- **Parallel Module Fetching**: Komponen situs (Hero, Solusi, SWOT, Persona, Data) dimuat secara paralel menggunakan `Promise.all`.
+- **Native Lazy Loading**: Aset visual menggunakan `loading="lazy"` dikombinasikan dengan transisi saturasi.
+
+### Keamanan
+- **Content Security Policy (CSP)**: Aturan ketat pada eksekusi dokumen untuk memblokir eksploitasi *Cross-Site Scripting* (XSS).
+- **DOMPurify**: Sanitasi ganda berbasis *runtime* untuk memastikan konten JSON bebas dari injeksi HTML.
+
+---
+
+## Struktur Direktori
 
 ```text
 gate-puinter/
-├── css/                  # Gaya arsitektur visual
-│   ├── animations.css    # GPU-accelerated scroll reveals
-│   ├── base.css          # Variabel warna (Light/Dark) & Tipografi HSL
-│   ├── components.css    # Modal Editor rahasia, tabel, input
-│   ├── layout.css        # Floating Navbar & struktur dasar
+├── css/                  # Stylesheet
+│   ├── animations.css    # Animasi scroll reveal
+│   ├── base.css          # Variabel dan tipografi
+│   ├── components.css    # Komponen tabel dan input
+│   ├── layout.css        # Navbar dan tata letak dasar
 │   └── sections.css      # Desain per-komponen parsial
-├── data/                 # Basis data JSON (Sebagai Headless CMS)
-├── img/                  # Aset gambar lokal & direktori hasil unggahan
+├── data/                 # Basis data JSON
+├── img/                  # Aset gambar statis
 ├── js/
-│   ├── content-editor.js # Logika pemuatan konten dinamis
-│   ├── module-loader.js  # Sistem injeksi HTML Paralel (Modular)
-│   ├── nav.js            # Mekanisme navigasi, Scroll Spy & Tema
-│   └── uploader.js       # Utilitas manajemen aset gambar
-├── partials/             # Modul-modul kerangka HTML yang akan dirakit
-└── index.html            # Kerangka induk proyek
+│   ├── content-editor.js # Logika penanganan konten
+│   ├── module-loader.js  # Sistem injeksi modul HTML
+│   ├── nav.js            # Mekanisme navigasi dan tema
+│   └── uploader.js       # Utilitas manajemen aset
+├── partials/             # Modul kerangka HTML
+└── index.html            # Berkas utama
 ```
 
 ---
 
-## 🚀 Cara Menjalankan (Development)
+## Cara Menjalankan
 
-Sistem bergantung pada *Fetch API* yang harus dijalankan dalam lingkungan protokol `http://` atau `https://`, bukan direktori berkas `file://`.
+Sistem bergantung pada *Fetch API* yang harus dijalankan dalam lingkungan protokol `http://` atau `https://` (bukan direktori `file://`).
 
-**1. Menggunakan ekstensi VS Code Live Server:**
-- Buka `index.html`
-- Tekan `Alt + L, Alt + O` (Start Live Server)
+**1. Ekstensi VS Code Live Server:**
+Buka `index.html`, lalu jalankan *Live Server*.
 
 **2. Menggunakan Node.js:**
 ```bash
@@ -72,13 +67,8 @@ python3 -m http.server 8080
 
 ---
 
+## Standar Pengembangan
 
-## 👨‍💻 Kolaborasi & Standar Kode
-
-Jika Anda ingin berkontribusi dalam pengembangan lebih lanjut, pastikan mematuhi panduan teknis yang telah dibakukan:
-1. Jangan menyertakan paket *library* eksternal tambahan tanpa justifikasi yang kuat. Seluruh dependensi pihak ketiga (`DOMPurify`, `Lucide Icons`) diintegrasikan via CDN yang diotorisasi secara aman.
-2. Setiap kali merombak gaya CSS, pastikan merujuk kepada arsitektur *Interface Kit* (menghindari manipulasi margin statis dan lebih mempercayakan adaptasi kepadatan pada fitur `flex` atau `grid`).
-3. Dilarang merusak atau melonggarkan batas `Content-Security-Policy` di berkas `index.html`. Jika Anda mengalami *error merah* di inspektor logal (seperti ekstensi Livereload), itu adalah bukti bahwa pagar CSP berfungsi sangat efektif melarang masuknya skrip lokal eksternal.
-
----
-*Dibangun dengan dedikasi pada detail struktural dan obsesi penuh pada performa.* 🚀
+1. Jangan menambahkan *library* eksternal tanpa alasan teknis. Dependensi yang ada (`DOMPurify`, `Lucide Icons`) diintegrasikan secara aman melalui CDN.
+2. Patuhi arsitektur antarmuka yang ada. Gunakan fitur `flex` atau `grid` untuk adaptasi tata letak alih-alih memanipulasi *margin* secara statis.
+3. Dilarang melonggarkan batas `Content-Security-Policy` di dalam berkas `index.html`.
