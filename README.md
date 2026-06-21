@@ -20,11 +20,6 @@
 - **Parallel Module Fetching**: Komponen-komponen *website* (Hero, Latar Belakang, Solusi, SWOT, Persona, Data) dimuat secara paralel menggunakan `Promise.all` demi pencapaian *First Contentful Paint* (FCP) di bawah 1 detik.
 - **Native Lazy Loading**: Seluruh aset visual selain *Hero Section* dikunci dengan `loading="lazy"` dikombinasikan dengan transisi saturasi (*opacity 0 -> 1*) guna menghemat pengeluaran *bandwidth* secara masif.
 
-### 🔐 "Tap 10x" Secret CMS (Content Management System)
-Sistem ini dilengkapi dengan mekanisme manajemen konten dinamis yang tersembunyi tanpa memerlukan instalasi *database* SQL terpisah (sepenuhnya berjalan menggunakan repositori GitHub).
-- **Mekanisme Rahasia**: Klik / ketuk teks logo **GATE PUINTER** sebanyak 10 kali secara berturut-turut untuk membuka *Dashboard Editor* rahasia.
-- **In-line Editing**: Kemampuan merubah teks paragraf, judul, dan matriks SWOT langsung di lokasi halaman tersebut berada.
-- **Direct GitHub Uploader**: Kemampuan mengunggah aset gambar, memotong (*crop*), dan mengirim *commit* secara langsung ke direktori repositori `img/uploads` via GitHub API.
 
 ### 🛡 Keamanan Standar Industri (Hardening)
 - **Strict Content Security Policy (CSP)**: Peraturan ketat pada eksekusi dokumen. Memblokir sumber skrip silang (*Cross-Site Scripting/XSS*) dari wilayah *domain* asing yang tidak terotorisasi.
@@ -47,10 +42,10 @@ gate-puinter/
 ├── data/                 # Basis data JSON (Sebagai Headless CMS)
 ├── img/                  # Aset gambar lokal & direktori hasil unggahan
 ├── js/
-│   ├── content-editor.js # Logika Secret CMS (Tap 10x, DOMPurify)
+│   ├── content-editor.js # Logika pemuatan konten dinamis
 │   ├── module-loader.js  # Sistem injeksi HTML Paralel (Modular)
 │   ├── nav.js            # Mekanisme navigasi, Scroll Spy & Tema
-│   └── uploader.js       # Logika kompresi & Crop unggahan ke GitHub API
+│   └── uploader.js       # Utilitas manajemen aset gambar
 ├── partials/             # Modul-modul kerangka HTML yang akan dirakit
 └── index.html            # Kerangka induk proyek
 ```
@@ -77,25 +72,11 @@ python3 -m http.server 8080
 
 ---
 
-## 🔒 Konfigurasi Integrasi GitHub CMS
-
-Agar *Secret Editor CMS* dapat menyimpan gambar maupun modifikasi teks ke repositori, pengguna (*Author*) wajib menyiapkan konfigurasi token.
-
-1. Buka halaman *landing page*.
-2. Klik nama merek **GATE PUINTER** 10 kali hingga ikon pensil melayang (*Floating Toolbar*) muncul di pojok kanan atas.
-3. Klik tombol pengaturan (*gear*) pada panel Editor.
-4. Masukkan kredensial konfigurasi repositori:
-   - **Repository Owner**: `thaliban04`
-   - **Repository Name**: `gate-puinter`
-   - **GitHub Personal Access Token (PAT)**: *(Penting: Token harus berizin baca/tulis `repo` atau `contents`)*.
-5. Simpan Konfigurasi. CMS kini sudah tersambung langsung dengan *backend* repositori statis!
-
----
 
 ## 👨‍💻 Kolaborasi & Standar Kode
 
 Jika Anda ingin berkontribusi dalam pengembangan lebih lanjut, pastikan mematuhi panduan teknis yang telah dibakukan:
-1. Jangan menyertakan paket *library* eksternal tambahan. Seluruh dependensi pihak ketiga (`DOMPurify`, `Cropper.js`, `Lucide Icons`) diintegrasikan via CDN yang diotorisasi secara aman.
+1. Jangan menyertakan paket *library* eksternal tambahan tanpa justifikasi yang kuat. Seluruh dependensi pihak ketiga (`DOMPurify`, `Lucide Icons`) diintegrasikan via CDN yang diotorisasi secara aman.
 2. Setiap kali merombak gaya CSS, pastikan merujuk kepada arsitektur *Interface Kit* (menghindari manipulasi margin statis dan lebih mempercayakan adaptasi kepadatan pada fitur `flex` atau `grid`).
 3. Dilarang merusak atau melonggarkan batas `Content-Security-Policy` di berkas `index.html`. Jika Anda mengalami *error merah* di inspektor logal (seperti ekstensi Livereload), itu adalah bukti bahwa pagar CSP berfungsi sangat efektif melarang masuknya skrip lokal eksternal.
 
