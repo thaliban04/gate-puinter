@@ -25,6 +25,9 @@ document.addEventListener('modulesLoaded', () => {
       imgOverlay.className = 'upload-overlay';
       // Mencegah gambar tertarik/gepeng, kita pakai object-fit cover
       imgOverlay.style.cssText = 'position: absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:10; display:none; background:var(--card); pointer-events:none;';
+      if (id !== 'hero') {
+        imgOverlay.loading = 'lazy';
+      }
       
       // Jika gambar error (tidak ditemukan di GitHub), hilangkan overlay agar placeholder asli terlihat
       imgOverlay.onerror = function() { this.style.display = 'none'; };
