@@ -158,21 +158,23 @@
   <script src="js/uploader.js?v=3"></script>
   <script src="js/content-editor.js?v=1"></script>
   <script>
-    // Initialize Lucide icons
-    lucide.createIcons();
-    // Load modules (partials) into the page
-    const modules = [
-      'partials/hero.html',
-      'partials/background.html',
-      'partials/solution.html',
-      'partials/persona.html',
-      'partials/swot.html',
-      'partials/data.html',
-      'partials/roadmap.html',
-      'partials/eval.html',
-      'partials/closing.html'
-    ];
-    loadModules(modules, document.getElementById('mainContent'));
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Lucide icons
+      lucide.createIcons();
+      // Load modules (partials) into the page
+      const modules = [
+        'partials/hero.html',
+        'partials/background.html',
+        'partials/solution.html',
+        'partials/persona.html',
+        'partials/swot.html',
+        'partials/data.html',
+        'partials/roadmap.html',
+        'partials/eval.html',
+        'partials/closing.html'
+      ];
+      loadModules(modules, document.getElementById('mainContent'));
+    });
   </script>
 </body>
 </html>
