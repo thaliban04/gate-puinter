@@ -384,17 +384,56 @@ body.modal-open {
   min-height: 120px;
   background: var(--bg);
   border: 1px solid var(--border-med);
-  border-radius: 8px;
+  border-radius: 0 0 8px 8px;
   color: var(--text);
   padding: 16px;
   font-family: inherit;
   font-size: 0.95rem;
   resize: vertical;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+.rte-editor p { margin: 0 0 10px 0; }
+.rte-editor ul { margin: 0 0 10px 20px; padding: 0; }
+.rte-editor li { margin-bottom: 4px; }
   box-sizing: border-box;
 }
 .content-richtext-area:focus {
   outline: none;
   border-color: var(--accent);
+}
+.rte-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  background: var(--card);
+  border: 1px solid var(--border-med);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+}
+.rte-btn {
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: var(--text2);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.rte-btn:hover {
+  background: var(--bg);
+  color: var(--accent);
+}
+.rte-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border-med);
+  margin: 0 4px;
 }
 .content-editor-field-label {
   font-size: 0.75rem;

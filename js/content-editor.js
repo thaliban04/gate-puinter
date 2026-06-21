@@ -168,17 +168,37 @@ function buildTextEditor(body, el) {
   label.className = 'content-editor-field-label';
   label.textContent = 'Isi Teks';
 
-  const ta = document.createElement('textarea');
+  const toolbar = document.createElement('div');
+  toolbar.className = 'rte-toolbar';
+  toolbar.innerHTML = `
+    <button class="rte-btn" data-command="bold" title="Tebal"><i data-lucide="bold" style="width:14px;height:14px;"></i></button>
+    <button class="rte-btn" data-command="italic" title="Miring"><i data-lucide="italic" style="width:14px;height:14px;"></i></button>
+    <button class="rte-btn" data-command="underline" title="Garis Bawah"><i data-lucide="underline" style="width:14px;height:14px;"></i></button>
+    <div class="rte-divider"></div>
+    <button class="rte-btn" data-command="insertUnorderedList" title="List"><i data-lucide="list" style="width:14px;height:14px;"></i></button>
+    <button class="rte-btn" data-command="removeFormat" title="Hapus Format"><i data-lucide="eraser" style="width:14px;height:14px;"></i></button>
+  `;
+
+  const ta = document.createElement('div');
   ta.id = 'contentEditorTextarea';
-  ta.className = 'content-richtext-area';
-  ta.value = currentText.trim();
-  ta.placeholder = 'Ketikkan konten di sini...';
+  ta.className = 'content-richtext-area rte-editor';
+  ta.contentEditable = 'true';
+  ta.innerHTML = currentText.trim();
+
+  toolbar.querySelectorAll('.rte-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.execCommand(btn.getAttribute('data-command'), false, null);
+      ta.focus();
+    });
+  });
 
   const hint = document.createElement('div');
   hint.className = 'text-editor-help';
-  hint.textContent = 'Teks yang Anda ketik akan langsung menggantikan konten yang ada.';
+  hint.textContent = 'Blok teks yang ingin Anda format, lalu klik tombol di atas.';
 
   body.appendChild(label);
+  body.appendChild(toolbar);
   body.appendChild(ta);
   body.appendChild(hint);
 }
@@ -307,11 +327,12 @@ async function finishContentEdit() {
 
   if (currentEditType === 'text') {
     const ta = document.getElementById('contentEditorTextarea');
-    data = { html: ta.value };
+    const htmlVal = ta.value !== undefined ? ta.value : ta.innerHTML;
+    data = { html: htmlVal };
 
     // Apply to DOM immediately
     const target = currentEditEl.querySelector('[data-editable-target]') || currentEditEl;
-    target.innerHTML = ta.value;
+    target.innerHTML = htmlVal;
 
   } else if (currentEditType === 'table') {
     // Collect final values from inputs
