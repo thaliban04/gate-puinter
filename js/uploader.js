@@ -24,15 +24,15 @@ document.addEventListener('modulesLoaded', () => {
       imgOverlay = document.createElement('img');
       imgOverlay.className = 'upload-overlay';
       // Mencegah gambar tertarik/gepeng, kita pakai object-fit cover
-      imgOverlay.style.cssText = 'position: absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:10; display:none; background:var(--card); pointer-events:none;';
+      imgOverlay.style.cssText = 'position: absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:10; opacity:0; background:var(--card); pointer-events:none; transition: opacity 0.3s ease;';
       if (id !== 'hero') {
         imgOverlay.loading = 'lazy';
       }
       
-      // Jika gambar error (tidak ditemukan di GitHub), hilangkan overlay agar placeholder asli terlihat
-      imgOverlay.onerror = function() { this.style.display = 'none'; };
-      // Jika gambar sukses diload, tampilkan
-      imgOverlay.onload = function() { this.style.display = 'block'; };
+      // Jika gambar error (tidak ditemukan di GitHub), biarkan transparan agar placeholder asli terlihat
+      imgOverlay.onerror = function() { this.style.opacity = '0'; };
+      // Jika gambar sukses diload, tampilkan (fade in)
+      imgOverlay.onload = function() { this.style.opacity = '1'; };
       
       el.appendChild(imgOverlay);
     }
