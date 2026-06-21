@@ -558,54 +558,34 @@ body.modal-open {
 .team-card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px;
+  border-radius: 12px;
+  padding: 16px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 16px;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
-  cursor: default;
+  justify-content: center;
+  text-align: center;
+  gap: 4px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .team-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
   border-color: var(--primary);
-}
-
-.team-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--blue) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(46, 91, 255, 0.2);
-}
-
-.team-avatar svg {
-  width: 20px;
-  height: 20px;
 }
 
 .team-info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  min-width: 0;
+  gap: 2px;
+  width: 100%;
 }
 
 .team-name {
   font-weight: 600;
   color: var(--text);
-  font-size: 1.05rem;
+  font-size: 1rem;
   line-height: 1.3;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .team-nrp {
@@ -613,5 +593,4 @@ body.modal-open {
   color: var(--text2);
   font-variant-numeric: tabular-nums;
   font-family: 'DM Sans', sans-serif;
-  font-weight: 500;
 }
