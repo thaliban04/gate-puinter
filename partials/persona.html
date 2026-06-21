@@ -102,50 +102,112 @@
         <div class="sub-label">User Persona</div>
         <h3>PERSONA BOARD</h3>
       </div>
-      <div class="persona-grid">
-        <div class="persona-card reveal" style="--delay:0.1s">
-          <div class="persona-header">
-            <div class="persona-photo">
-              <div class="persona-photo-placeholder secret-uploader" data-upload-id="persona1" style="position: relative; overflow: hidden; cursor: pointer;"><i data-lucide="user"></i></div>
-            </div>
-            <div class="persona-meta">
-              <h3>Efriza Al Azizi, S.T., M.T.</h3>
-              <span class="persona-badge">Kepala Tata Usaha, 44 th</span>
-            </div>
+      <div class="master-persona-wrap reveal">
+        <!-- 1. TOP SECTION (PHOTO & PROFILE) -->
+        <div class="mp-top">
+          <!-- Photo -->
+          <div class="mp-photo-box secret-uploader" data-upload-id="persona1" style="position:relative;overflow:hidden;cursor:pointer;">
+            <i data-lucide="user" style="width:64px;height:64px;opacity:0.2;"></i>
           </div>
-          <div class="persona-body">
-            <div class="persona-stats">
-              <div class="p-stat"><div class="p-stat-label">Lokasi</div><div class="p-stat-val">Surabaya, Jatim</div></div>
-              <div class="p-stat"><div class="p-stat-label">Pengalaman</div><div class="p-stat-val">12 Tahun ASN</div></div>
+          <!-- Profile Details -->
+          <div class="mp-profile-box">
+            <div class="mp-badge" style="align-self: flex-end;">PROFILE</div>
+            <div class="mp-name-group">
+              <div class="mp-label">Name</div>
+              <h2 class="mp-name">Efriza Al Azizi, S.T., M.T.</h2>
             </div>
-            <div class="persona-points">
-              <div class="persona-point gain"><i data-lucide="check-circle"></i> Mempercepat arus kendaraan di gerbang</div>
-              <div class="persona-point gain"><i data-lucide="check-circle"></i> Rekam data keluar-masuk untuk audit</div>
-              <div class="persona-point gain"><i data-lucide="check-circle"></i> Membuktikan digitalisasi kampus</div>
-              <div class="persona-point" style="color:var(--red)"><i data-lucide="x-circle"></i> Frustrasi saat sensor lambat &amp; antrean panjang</div>
+            <div class="mp-stats-grid">
+              <div class="mp-stat-item">
+                <div class="mp-label">Umur</div>
+                <div class="mp-val">44</div>
+              </div>
+              <div class="mp-stat-item">
+                <div class="mp-label">Gender</div>
+                <div class="mp-val">Laki-Laki</div>
+              </div>
+              <div class="mp-stat-item">
+                <div class="mp-label">Lokasi</div>
+                <div class="mp-val">Surabaya, Jawa Timur</div>
+              </div>
+              <div class="mp-stat-item">
+                <div class="mp-label">Jabatan</div>
+                <div class="mp-val">Kepala Tata Usaha Institut</div>
+              </div>
+            </div>
+            <div class="mp-background">
+              <div class="mp-label" style="margin-bottom:8px;">Background</div>
+              <p>Staf senior ASN dengan 12 tahun pengalaman mengelola operasional gedung dan administrasi Fakultas Teknik. Bertanggung jawab atas keamanan aset kampus, dosen & tendik, dan mahasiswa. Paham kebutuhan teknis, namun keputusan pengadaan harus melalui birokrasi kampus.</p>
             </div>
           </div>
         </div>
-        <div class="persona-card reveal" style="--delay:0.2s">
-          <div class="persona-header">
-            <div class="persona-photo">
-              <div class="persona-photo-placeholder secret-uploader" data-upload-id="persona2" style="position: relative; overflow: hidden; cursor: pointer;"><i data-lucide="user"></i></div>
+
+        <!-- 2. MIDDLE SECTION (PERSONAL & GOALS) -->
+        <div class="mp-middle">
+          <!-- Personal -->
+          <div class="mp-personal-box">
+            <div class="mp-badge" style="align-self: flex-start; margin-left: -20px; margin-top: -30px; margin-bottom: 20px;">PERSONAL</div>
+            <div class="mp-list-group">
+              <div class="mp-label">Characteristics</div>
+              <ul>
+                <li>Adaptif dan cepat mempelajari teknologi atau sistem baru</li>
+                <li>Teliti serta mampu mengelola waktu dengan baik</li>
+                <li>Memiliki kemampuan berpikir kritis dan pemecahan masalah yang baik</li>
+                <li>Mampu bekerja secara mandiri maupun dalam tim</li>
+              </ul>
             </div>
-            <div class="persona-meta">
-              <h3>Risma Aulia Fadhila</h3>
-              <span class="persona-badge">Koordinator Operasional, 29 th</span>
+            <div class="mp-list-group" style="margin-top:24px;">
+              <div class="mp-label">Hobbies and Interests</div>
+              <ul>
+                <li>Menjelajahi tempat baru atau melakukan kegiatan outdoor</li>
+                <li>Bersosialisasi dan berkolaborasi dengan orang lain</li>
+                <li>Menonton konten edukatif atau inspiratif</li>
+              </ul>
             </div>
           </div>
-          <div class="persona-body">
-            <div class="persona-stats">
-              <div class="p-stat"><div class="p-stat-label">Lokasi</div><div class="p-stat-val">Surabaya, Jatim</div></div>
-              <div class="p-stat"><div class="p-stat-label">Fokus</div><div class="p-stat-val">Efisiensi Operasional</div></div>
+          <!-- Goals -->
+          <div class="mp-goals-box">
+            <div class="mp-badge" style="align-self: flex-end; margin-right: -20px; margin-top: -30px; margin-bottom: 20px; background: var(--green); color: var(--bg);">GOALS</div>
+            <div class="mp-goals-grid">
+              <div class="mp-list-group">
+                <div class="mp-label">Tujuan Utama</div>
+                <ul>
+                  <li>Mempercepat arus masuk-keluar kampus agar tidak ada penumpukan di gerbang</li>
+                  <li>Memastikan hanya civitas akademika yang sah yang bisa masuk area kampus</li>
+                  <li>Memiliki rekam data siapa saja yang keluar masuk untuk keperluan audit</li>
+                </ul>
+              </div>
+              <div class="mp-list-group">
+                <div class="mp-label">Motivasi</div>
+                <ul>
+                  <li>Kurangi beban administrasi dengan human manual yang menyita waktu</li>
+                  <li>Buktikan digitalisasi kampus bisa dimulai dari level operasional</li>
+                  <li>Meraih kepercayaan birokrasi atas pengelolaan aset yang baik</li>
+                  <li>Mendapatkan anggaran persetujuan rektorat dengan solusi yang hemat jangka panjang</li>
+                </ul>
+              </div>
             </div>
-            <div class="persona-points">
-              <div class="persona-point gain"><i data-lucide="check-circle"></i> Mengurangi antrean kendaraan jam sibuk</div>
-              <div class="persona-point gain"><i data-lucide="check-circle"></i> Kurangi ketergantungan pemeriksaan manual</div>
-              <div class="persona-point gain"><i data-lucide="check-circle"></i> Pantau kendaraan keluar secara real-time</div>
-              <div class="persona-point" style="color:var(--red)"><i data-lucide="x-circle"></i> Sulit monitor arus kendaraan secara akurat</div>
+          </div>
+        </div>
+
+        <!-- 3. BOTTOM SECTION (CHALLENGES) -->
+        <div class="mp-bottom">
+          <div class="mp-badge" style="align-self: flex-start; margin-left: -20px; margin-top: -30px; margin-bottom: 20px; background: var(--blue); color: var(--bg);">CHALLENGES</div>
+          <div class="mp-challenges-grid">
+            <div class="mp-list-group">
+              <div class="mp-label">Main pain points</div>
+              <ul style="color:var(--text2)">
+                <li>Kesusahan ketika alat yang digunakan sebagai akses hilang</li>
+                <li>Ke tidak responsifan dan lambat ketika sedang buru-buru</li>
+                <li>Pengalaman antri yang sangat panjang ketika sedang dalam jam atau waktu yang padat</li>
+              </ul>
+            </div>
+            <div class="mp-list-group">
+              <div class="mp-label">Frustrations</div>
+              <ul style="color:var(--red)">
+                <li>Dia merasa stress ketika ada potensi terlambat untuk kelas atau ujian karena pintu gerbang yang delay.</li>
+                <li>Dia merasa kesusahan ketika sedang hujan dan sensor tidak bisa langsung membaca akses dengan baik</li>
+                <li>Dia merasa khawatir ketika pintu gerbang tidak segera terbukan dan sedang banyak antrian di belakang</li>
+              </ul>
             </div>
           </div>
         </div>
