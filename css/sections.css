@@ -156,7 +156,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 48px;
-  align-items: start;
+  align-items: center;
 }
 .feature-list { display: flex; flex-direction: column; gap: 0; }
 .feature-row {
