@@ -81,17 +81,15 @@ document.addEventListener('modulesLoaded', () => {
     if (localData) {
       renderTeamTable(localData);
     } else {
-      // Fetch dari GitHub API (karena file json harus di parse)
-      fetch(`https://api.github.com/repos/thaliban04/gate-puinter/contents/data/${id}.json?v=${Date.now()}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data.content) {
-            // Decode base64
-            const jsonStr = decodeURIComponent(escape(atob(data.content)));
-            renderTeamTable(jsonStr);
-            // Simpan ke cache lokal
-            localStorage.setItem('gate-text-' + id, jsonStr);
-          }
+      // Fetch dari public path
+      fetch(`data/${id}.json`)
+        .then(res => {
+          if (!res.ok) throw new Error('Not found');
+          return res.text();
+        })
+        .then(textData => {
+          renderTeamTable(textData);
+          localStorage.setItem('gate-text-' + id, textData);
         }).catch(e => {
           console.log("No remote team data found yet.");
         });

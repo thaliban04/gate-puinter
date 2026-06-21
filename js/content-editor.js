@@ -388,12 +388,9 @@ async function finishContentEdit() {
 // =============================================================================
 async function fetchContentFromGitHub(id) {
   try {
-    const url = `https://api.github.com/repos/${REPO}/contents/data/content-${id}.json`;
-    const res = await fetch(url);
+    const res = await fetch(`data/content-${id}.json`);
     if (!res.ok) return null;
-    const file = await res.json();
-    const str = decodeURIComponent(escape(atob(file.content.replace(/\n/g, ''))));
-    return JSON.parse(str);
+    return await res.json();
   } catch (e) { return null; }
 }
 
