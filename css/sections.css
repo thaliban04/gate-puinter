@@ -708,11 +708,11 @@
 .mermaid svg {
   max-width: 100%;
 }
-.mermaid .edgePath .path { stroke: var(--text3) !important; opacity: 0.8 !important; }
-.mermaid .edgeLabel { background-color: var(--card) !important; color: var(--text) !important; border: 1px solid var(--border) !important; border-radius: 4px !important; }
-.mermaid .marker { fill: var(--text3) !important; stroke: var(--text3) !important; opacity: 0.8 !important; }
-.mermaid .node rect, .mermaid .node polygon, .mermaid .node circle { fill: var(--bg) !important; stroke: var(--border-med) !important; stroke-width: 2px !important; }
-.mermaid .node .label { color: var(--text) !important; font-weight: 600 !important; }
+.mermaid .edgePath .path { stroke: var(--text) !important; opacity: 0.6 !important; }
+.mermaid .edgeLabel { background-color: var(--card) !important; color: var(--text) !important; border: 1px solid var(--border-med) !important; border-radius: 4px !important; }
+.mermaid .marker { fill: var(--text) !important; stroke: var(--text) !important; opacity: 0.6 !important; }
+.mermaid .node rect, .mermaid .node polygon, .mermaid .node circle { fill: var(--card) !important; stroke: var(--border-med) !important; stroke-width: 2px !important; }
+.mermaid .node .label, .mermaid .node .label div, .mermaid text, .mermaid tspan { color: var(--text) !important; fill: var(--text) !important; font-weight: 600 !important; }
 
 .ujm-need { padding: 8px 6px; text-align: center; font-size: 0.66rem; line-height: 1.4; font-weight: 500; color: var(--accent); background: var(--accent-dim); }
 .ujm-need.empty { color: var(--text3); background: var(--bg); font-weight: 400; }
