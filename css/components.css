@@ -464,9 +464,12 @@ body.modal-open {
 .tbl-ctrl-btn:hover { background: var(--card-hover); color: var(--text); }
 .tbl-ctrl-btn.danger:hover { background: rgba(239,68,68,0.1); color: var(--red); border-color: var(--red); }
 
-/* Editable indicator on hover */
-.secret-editable {
+/* Editable indicator on hover & Accessibility fixes */
+.secret-editable, .secret-uploader {
   position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
 @media (max-width: 768px) {

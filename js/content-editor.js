@@ -30,14 +30,18 @@ function initContentEditable(el) {
   const cached = localStorage.getItem(`gate-content-${id}`);
   if (cached) {
     applyContent(el, id, type, JSON.parse(cached));
-  } else {
-    fetchContentFromGitHub(id).then(data => {
-      if (data) {
-        localStorage.setItem(`gate-content-${id}`, JSON.stringify(data));
+  }
+  
+  // ALWAYS fetch from GitHub in background to ensure data is not stale
+  fetchContentFromGitHub(id).then(data => {
+    if (data) {
+      const dataStr = JSON.stringify(data);
+      if (dataStr !== cached) {
+        localStorage.setItem(`gate-content-${id}`, dataStr);
         applyContent(el, id, type, data);
       }
-    });
-  }
+    }
+  });
 
   // Attach 10x tap counter
   let clickCount = 0;
@@ -50,8 +54,14 @@ function initContentEditable(el) {
     clickCount++;
     lastClickTime = now;
 
+    if (clickCount >= 5 && clickCount < 10) {
+      showTapIndicator(e.clientX, e.clientY, 10 - clickCount);
+    }
+
     if (clickCount === 10) {
       clickCount = 0;
+      let ind = document.getElementById('tap-indicator');
+      if (ind) ind.style.opacity = '0';
       openContentEditorModal(el, id, type);
     }
   });
@@ -152,7 +162,7 @@ function closeContentEditorModal() {
 // =============================================================================
 function buildTextEditor(body, el) {
   const target = el.querySelector('[data-editable-target]') || el;
-  const currentText = target.innerText || target.textContent || '';
+  const currentText = target.innerHTML || '';
 
   const label = document.createElement('div');
   label.className = 'content-editor-field-label';
@@ -395,4 +405,21 @@ function showToast(msg) {
   toast.textContent = msg;
   toast.style.opacity = '1';
   setTimeout(() => { toast.style.opacity = '0'; }, 3500);
+}
+
+function showTapIndicator(x, y, remaining) {
+  let ind = document.getElementById('tap-indicator');
+  if (!ind) {
+    ind = document.createElement('div');
+    ind.id = 'tap-indicator';
+    ind.style.cssText = 'position:fixed; pointer-events:none; z-index:999999; background:var(--accent); color:#fff; font-weight:bold; padding:4px 8px; border-radius:12px; font-size:12px; transform:translate(-50%, -100%); transition:opacity 0.2s;';
+    document.body.appendChild(ind);
+  }
+  ind.textContent = `Tap ${remaining}x lagi`;
+  ind.style.left = x + 'px';
+  ind.style.top = (y - 20) + 'px';
+  ind.style.opacity = '1';
+  
+  clearTimeout(ind.hideTimer);
+  ind.hideTimer = setTimeout(() => { ind.style.opacity = '0'; }, 600);
 }
