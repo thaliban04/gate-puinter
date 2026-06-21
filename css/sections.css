@@ -510,18 +510,33 @@
 .closing-inner > p { color: var(--text2); margin-bottom: 36px; font-size: 0.95rem; }
 
 .closing-pillars {
-  display: flex; justify-content: center; gap: 14px; margin-bottom: 36px;
-  flex-wrap: wrap;
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 16px; 
+  margin-bottom: 36px;
 }
 .pillar {
   background: var(--card);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-med);
   border-radius: var(--radius);
-  padding: 16px 20px;
-  text-align: left; min-width: 160px;
+  padding: 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
 }
-.pillar svg { width: 18px; height: 18px; color: var(--accent); margin-bottom: 8px; }
-.pillar p { font-size: 0.8rem; color: var(--text2); line-height: 1.5; }
+.pillar svg { width: 22px; height: 22px; color: var(--accent); margin-bottom: 12px; }
+.pillar p { font-size: 0.85rem; color: var(--text2); line-height: 1.5; }
+
+@media (max-width: 768px) {
+  .closing-pillars { grid-template-columns: 1fr; gap: 12px; }
+  .pillar {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+  }
+  .pillar svg { margin-bottom: 0; width: 24px; height: 24px; flex-shrink: 0; }
+}
 
 .team-card {
   background: transparent;
