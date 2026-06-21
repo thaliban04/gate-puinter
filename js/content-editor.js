@@ -175,6 +175,7 @@ function buildTextEditor(body, el) {
     <button class="rte-btn" data-command="italic" title="Miring"><i data-lucide="italic" style="width:14px;height:14px;"></i></button>
     <button class="rte-btn" data-command="underline" title="Garis Bawah"><i data-lucide="underline" style="width:14px;height:14px;"></i></button>
     <div class="rte-divider"></div>
+    <button class="rte-btn" data-command="createLink" title="Tautan (Link)"><i data-lucide="link" style="width:14px;height:14px;"></i></button>
     <button class="rte-btn" data-command="insertUnorderedList" title="List"><i data-lucide="list" style="width:14px;height:14px;"></i></button>
     <button class="rte-btn" data-command="removeFormat" title="Hapus Format"><i data-lucide="eraser" style="width:14px;height:14px;"></i></button>
   `;
@@ -185,11 +186,24 @@ function buildTextEditor(body, el) {
   ta.contentEditable = 'true';
   ta.innerHTML = currentText.trim();
 
+  // Fix Paste: Strip HTML formatting
+  ta.addEventListener('paste', (e) => {
+    e.preventDefault();
+    const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+    document.execCommand('insertText', false, text);
+  });
+
   toolbar.querySelectorAll('.rte-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    // Gunakan mousedown agar div contentEditable tidak kehilangan fokus sebelum diklik
+    btn.addEventListener('mousedown', (e) => {
       e.preventDefault();
-      document.execCommand(btn.getAttribute('data-command'), false, null);
-      ta.focus();
+      const cmd = btn.getAttribute('data-command');
+      if (cmd === 'createLink') {
+        const url = prompt('Masukkan URL tautan:', 'https://');
+        if (url) document.execCommand(cmd, false, url);
+      } else {
+        document.execCommand(cmd, false, null);
+      }
     });
   });
 
