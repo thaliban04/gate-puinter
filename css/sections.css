@@ -536,6 +536,16 @@
     padding: 16px;
   }
   .pillar svg { margin-bottom: 0; width: 24px; height: 24px; flex-shrink: 0; }
+  
+  /* Smart Grid Collapsing */
+  .problem-grid, 
+  .swot-grid, 
+  .spec-grid, 
+  .persona-cards, 
+  .w1h-grid, 
+  .bg-kpi-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .team-table-wrap {
@@ -545,7 +555,8 @@
   background: var(--card);
   border: 1px solid var(--border-med);
   border-radius: var(--radius);
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .team-table-wrap:hover {
