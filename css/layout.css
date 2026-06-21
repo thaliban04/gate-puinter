@@ -282,6 +282,7 @@
     padding: 0 12px 0 20px; 
   }
   .navbar-brand { flex: 1; min-width: 0; }
+  .navbar-brand > div:not(.brand-icon) { min-width: 0; }
   .brand-name { font-size: 1rem; }
   .brand-sub { 
     white-space: nowrap; 
