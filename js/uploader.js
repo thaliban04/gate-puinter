@@ -40,7 +40,7 @@ document.addEventListener('modulesLoaded', () => {
       imgOverlay.src = localData;
     } else {
       // Fetch dari GitHub public
-      imgOverlay.src = `img/uploads/${id}.png?v=${Date.now()}`;
+      imgOverlay.src = `img/uploads/${id}.png`;
     }
 
     let clickCount = 0;
@@ -160,7 +160,8 @@ async function uploadToGitHub(id, base64Data) {
 }
 
 async function uploadTextToGitHub(id, textContent) {
-  const token = localStorage.getItem('gate-github-token');
+  let token = localStorage.getItem('gate-github-token');
+  if (token && !token.startsWith('gh')) token = atob(token); // Decode jika Base64
   if (!token) return false;
   
   // Encode string ke base64 (UTF-8 safe)
@@ -199,10 +200,16 @@ async function uploadTextToGitHub(id, textContent) {
 // =============================================================================
 async function startUploadProcess(el, id) {
   let token = localStorage.getItem('gate-github-token');
+  if (token && !token.startsWith('gh')) {
+    try { token = atob(token); } catch(e) { token = null; }
+  }
   if (!token) {
     token = prompt("🔒 FITUR ADMIN RAHASIA 🔒\n\nMasukkan 'GitHub Access Token':");
     if (!token || token.trim() === "") return;
-    localStorage.setItem('gate-github-token', token.trim());
+    localStorage.setItem('gate-github-token', btoa(token.trim()));
+  } else if (token.startsWith('ghp_')) {
+    // Migrate plaintext token to base64
+    localStorage.setItem('gate-github-token', btoa(token));
   }
   
   currentUploadId = id;

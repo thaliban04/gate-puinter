@@ -118,10 +118,15 @@ function renderTableFromData(tableEl, data) {
 // =============================================================================
 function openContentEditorModal(el, id, type) {
   let token = localStorage.getItem('gate-github-token');
+  if (token && !token.startsWith('gh')) {
+    try { token = atob(token); } catch(e) { token = null; }
+  }
   if (!token) {
     token = prompt('🔒 FITUR ADMIN RAHASIA 🔒\n\nMasukkan GitHub Access Token:');
     if (!token || !token.trim()) return;
-    localStorage.setItem('gate-github-token', token.trim());
+    localStorage.setItem('gate-github-token', btoa(token.trim()));
+  } else if (token.startsWith('ghp_')) {
+    localStorage.setItem('gate-github-token', btoa(token));
   }
 
   currentEditEl   = el;
@@ -393,7 +398,8 @@ async function fetchContentFromGitHub(id) {
 }
 
 async function uploadContentToGitHub(id, data) {
-  const token = localStorage.getItem('gate-github-token');
+  let token = localStorage.getItem('gate-github-token');
+  if (token && !token.startsWith('gh')) token = atob(token);
   if (!token) return false;
 
   const path = `data/content-${id}.json`;

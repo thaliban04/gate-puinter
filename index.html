@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GATE PUINTER — Inovasi Keamanan LPR</title>
+  <meta name="description" content="Sistem gerbang cerdas LPR ITS. Solusi antrean otomatis dengan License Plate Recognition terintegrasi.">
+  <meta property="og:title" content="GATE PUINTER">
+  <meta property="og:description" content="Sistem gerbang cerdas LPR ITS. Solusi antrean otomatis terintegrasi.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://thaliban04.github.io/gate-puinter/">
+  <meta name="theme-color" content="#080808">
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg?v=2">
   <link rel="stylesheet" href="css/base.css?v=27">
   <link rel="stylesheet" href="css/layout.css?v=27">
@@ -14,15 +20,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
   <!-- Chart.js & Lucide Icons -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <script src="https://unpkg.com/lucide@latest" defer></script>
   <!-- Mermaid JS untuk Diagram Alir -->
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js" defer></script>
   <script>
-    mermaid.initialize({ 
-      startOnLoad: false, 
-      theme: 'dark',
-      flowchart: { curve: 'linear' }
+    document.addEventListener('DOMContentLoaded', () => {
+      mermaid.initialize({ 
+        startOnLoad: false, 
+        theme: 'dark',
+        flowchart: { curve: 'linear' }
+      });
     });
 
     // Jalankan Mermaid secara manual HANYA SETELAH semua partials selesai dimuat
