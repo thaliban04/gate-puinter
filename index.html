@@ -118,6 +118,28 @@
     </div>
   </div>
 
+  <!-- Universal Content Editor Modal -->
+  <div id="contentEditorModal" class="cropper-modal">
+    <div class="content-editor-modal-content" id="contentEditorInner">
+      <div class="content-editor-header">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <i data-lucide="edit-3" id="contentEditorIcon" style="width:20px;height:20px;"></i>
+          <span id="contentEditorTitle">Edit Konten</span>
+        </div>
+        <button onclick="closeContentEditorModal()" style="background:none;border:none;cursor:pointer;color:var(--text3);">
+          <i data-lucide="x" style="width:20px;height:20px;"></i>
+        </button>
+      </div>
+      <div class="content-editor-body" id="contentEditorBody">
+        <!-- dynamically filled -->
+      </div>
+      <div class="cropper-modal-actions">
+        <button id="contentEditorCancel" class="btn btn-outline" style="flex:1;" onclick="closeContentEditorModal()">Batal</button>
+        <button id="contentEditorDone" class="btn btn-primary" style="flex:1;">Selesai & Simpan</button>
+      </div>
+    </div>
+  </div>
+
   <!-- JS -->
   <script src="js/nav.js"></script>
   <script src="js/animations.js"></script>
@@ -125,7 +147,8 @@
   <script src="js/module-loader.js"></script>
   <!-- Cropper.js & Uploader -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-  <script src="js/uploader.js?v=2"></script>
+  <script src="js/uploader.js?v=3"></script>
+  <script src="js/content-editor.js?v=1"></script>
   <script>
     // Initialize Lucide icons
     lucide.createIcons();

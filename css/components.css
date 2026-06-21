@@ -333,3 +333,133 @@
   font-size: 0.8rem;
   color: var(--text3);
 }
+
+/* =========================================
+   UNIVERSAL CONTENT EDITOR MODAL
+========================================= */
+.content-editor-modal-content {
+  background: var(--card);
+  width: 95%;
+  max-width: 800px;
+  max-height: 90vh;
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.content-editor-header {
+  padding: 18px 20px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border-med);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+}
+.content-editor-body {
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+/* Rich Text Editor */
+.content-richtext-area {
+  width: 100%;
+  min-height: 120px;
+  background: var(--bg);
+  border: 1px solid var(--border-med);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 16px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+  box-sizing: border-box;
+}
+.content-richtext-area:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.content-editor-field-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+/* Table Editor */
+.table-editor-wrap {
+  overflow-x: auto;
+}
+.table-editor {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.table-editor th,
+.table-editor td {
+  border: 1px solid var(--border-med);
+  padding: 0;
+  position: relative;
+}
+.table-editor th {
+  background: var(--bg);
+}
+.table-editor th input,
+.table-editor td input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 10px 12px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.85rem;
+  box-sizing: border-box;
+  outline: none;
+}
+.table-editor th input { font-weight: 700; color: var(--text3); }
+.table-editor th input:focus,
+.table-editor td input:focus {
+  background: var(--accent-dim);
+}
+
+/* Table Editor Controls */
+.table-editor-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.tbl-ctrl-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border-med);
+  background: var(--card);
+  color: var(--text2);
+  transition: all 0.15s ease;
+}
+.tbl-ctrl-btn:hover { background: var(--card-hover); color: var(--text); }
+.tbl-ctrl-btn.danger:hover { background: rgba(239,68,68,0.1); color: var(--red); border-color: var(--red); }
+
+/* Editable indicator on hover */
+.secret-editable {
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .content-editor-modal-content { max-height: 95vh; }
+  .table-editor-controls { gap: 6px; }
+  .tbl-ctrl-btn { padding: 7px 10px; font-size: 0.72rem; }
+}
