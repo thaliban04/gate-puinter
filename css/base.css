@@ -102,16 +102,19 @@ body {
   font-family: 'Outfit', sans-serif;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.65;
+  letter-spacing: 0.015em;
   overflow-x: hidden;
   width: 100%;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 h1, h2, h3, h4 {
   font-family: 'DM Sans', sans-serif;
-  line-height: 1.2;
+  line-height: 1.25;
   font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 a { text-decoration: none; color: inherit; }
@@ -119,11 +122,11 @@ ul { list-style: none; }
 img { display: block; max-width: 100%; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--text3); border-radius: var(--radius-sm); }
-::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+/* Scrollbar Premium */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-subtle); }
+::-webkit-scrollbar-thumb { background: rgba(136, 136, 136, 0.3); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(136, 136, 136, 0.6); }
 
 /* Utilities */
 .text-accent  { color: var(--accent); }
@@ -155,8 +158,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border-radius: var(--radius-sm);
   font-size: 0.875rem;
   font-weight: 600;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
   cursor: pointer;
+}
+.btn:active {
+  transform: scale(0.96) !important;
 }
 .btn-primary {
   background: var(--accent);

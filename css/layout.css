@@ -18,9 +18,9 @@
   top: 0; left: 0; right: 0;
   height: 72px;
   background: var(--navbar-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
@@ -64,7 +64,7 @@
 .nav-list {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   overflow-x: auto;
   white-space: nowrap;
   max-width: 65vw;
@@ -85,8 +85,11 @@
   font-size: 0.8rem;
   font-weight: 500;
   color: var(--text2);
-  transition: color 0.2s ease, background 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
   letter-spacing: 0.01em;
+}
+.nav-item a:active {
+  transform: scale(0.96);
 }
 .nav-item a svg {
   width: 16px;
