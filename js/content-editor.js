@@ -133,6 +133,7 @@ function openContentEditorModal(el, id, type) {
   }
 
   modal.classList.add('show');
+  document.body.classList.add('modal-open'); // lock scroll
 
   // Re-init lucide icons inside modal
   if (window.lucide) lucide.createIcons();
@@ -140,6 +141,7 @@ function openContentEditorModal(el, id, type) {
 
 function closeContentEditorModal() {
   document.getElementById('contentEditorModal').classList.remove('show');
+  document.body.classList.remove('modal-open'); // unlock scroll
 }
 
 // =============================================================================

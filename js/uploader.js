@@ -227,6 +227,7 @@ function openCropperModal(imageSrc, el) {
   const imageElement = document.getElementById('cropperImage');
   imageElement.src = imageSrc;
   modal.classList.add('show');
+  document.body.classList.add('modal-open');
 
   if (cropper) cropper.destroy();
 
@@ -245,6 +246,7 @@ function openCropperModal(imageSrc, el) {
 
 function closeCropperModal() {
   document.getElementById('cropperModal').classList.remove('show');
+  document.body.classList.remove('modal-open');
   if (cropper) { cropper.destroy(); cropper = null; }
 }
 
@@ -318,10 +320,12 @@ function openTextEditorModal(id) {
   }
   
   modal.classList.add('show');
+  document.body.classList.add('modal-open');
 }
 
 function closeTextEditorModal() {
   document.getElementById('textEditorModal').classList.remove('show');
+  document.body.classList.remove('modal-open');
 }
 
 async function finishTextEditorAndUpload() {
