@@ -20,7 +20,7 @@
   transform: translateX(-50%);
   height: 64px;
   width: calc(100% - 32px);
-  max-width: 1000px;
+  max-width: 1200px;
   background: var(--navbar-bg);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
@@ -79,6 +79,7 @@
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
   flex: 1 1 auto;
+  min-width: 0;
   justify-content: center;
 }
 .nav-list::-webkit-scrollbar {
@@ -89,7 +90,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 16px;
+  padding: 6px 12px;
   border-radius: 100px;
   font-size: 0.8rem;
   font-weight: 500;
