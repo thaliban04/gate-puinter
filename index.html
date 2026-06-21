@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GATE PUINTER — Inovasi Keamanan LPR</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/base.css?v=18">
+  <link rel="stylesheet" href="css/layout.css?v=18">
+  <link rel="stylesheet" href="css/sections.css?v=18">
+  <link rel="stylesheet" href="css/animations.css?v=18">
+  <link rel="stylesheet" href="css/components.css?v=18">
+
+  <!-- Chart.js & Lucide Icons -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Mermaid JS untuk Diagram Alir -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ 
+      startOnLoad: true, 
+      theme: 'dark',
+      flowchart: { curve: 'linear' }
+    });
+  </script>
+</head>
+<body>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Top Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="navbar-brand">
+      <div class="brand-icon"><i data-lucide="scan-line"></i></div>
+      <div>
+        <div class="brand-name">GATE PUINTER</div>
+        <div class="brand-sub">Smart LPR System</div>
+      </div>
+    </div>
+    
+    <nav class="nav-list" id="desktopNav">
+      <!-- Simplified navigation -->
+      <div class="nav-item"><a href="#hero" class="active">Beranda</a></div>
+      <div class="nav-item"><a href="#solution">Solusi</a></div>
+      <div class="nav-item"><a href="#marketanalysis">Analisis</a></div>
+      <div class="nav-item"><a href="#financial">Data</a></div>
+      <div class="nav-item"><a href="#closing">Penutup</a></div>
+    </nav>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle tema terang/gelap" title="Toggle tema">
+      <svg id="iconMoon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg id="iconSun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+
+    <!-- Hamburger (Mobile) -->
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </header>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" id="mobileMenu">
+    <nav class="nav-list-mobile">
+      <div class="nav-item"><a href="#hero" class="active"><i data-lucide="home"></i> Beranda</a></div>
+      <div class="nav-item"><a href="#solution"><i data-lucide="lightbulb"></i> Solusi</a></div>
+      <div class="nav-item"><a href="#marketanalysis"><i data-lucide="users"></i> Analisis</a></div>
+      <div class="nav-item"><a href="#financial"><i data-lucide="bar-chart-2"></i> Data</a></div>
+      <div class="nav-item"><a href="#closing"><i data-lucide="award"></i> Penutup</a></div>
+    </nav>
+  </div>
+
+  <main class="main-content" id="mainContent"></main>
+
+  <!-- JS -->
+  <script src="js/nav.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/module-loader.js"></script>
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+    // Load modules (partials) into the page
+    const modules = [
+      'partials/hero.html',
+      'partials/background.html',
+      'partials/solution.html',
+      'partials/persona.html',
+      'partials/swot.html',
+      'partials/data.html',
+      'partials/roadmap.html',
+      'partials/eval.html',
+      'partials/closing.html'
+    ];
+    loadModules(modules, document.getElementById('mainContent'));
+  </script>
+</body>
+</html>

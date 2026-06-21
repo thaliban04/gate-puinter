@@ -1,0 +1,121 @@
+<section id="solution" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">Produk</div>
+      <h2>PRODUCT</h2>
+    </div>
+
+    <!-- DESIGN -->
+    <div class="sub-section">
+      <div class="sub-header">
+        <div class="sub-label">Design</div>
+        <h3>DESIGN</h3>
+      </div>
+      <div class="solution-layout">
+        <div class="solution-features reveal">
+          <p>Desain industrial minimalis dengan material anti-korosi dan warna netral yang elegan. Cocok untuk berbagai jenis gerbang.</p>
+
+        </div>
+        <div class="solution-visual reveal-right">
+          <div class="solution-img-wrap" style="background: var(--card); border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; color: var(--text3); font-size: 0.85rem; text-align: center; padding: 20px; min-height: 300px;">
+            <div style="opacity: 0.7;">
+              <i data-lucide="image" style="width: 48px; height: 48px; margin-bottom: 12px; display: block; margin-left: auto; margin-right: auto;"></i>
+              <strong>[ AREA GAMBAR BLUEPRINT ]</strong><br><br>Letakkan gambar skema asli Anda di:<br><code style="background:var(--bg); padding:4px 8px; border-radius:4px; margin-top:8px; display:inline-block;">images/solution.png</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPESIFIKASI -->
+    <div class="sub-section">
+      <div class="sub-header">
+        <div class="sub-label">Detail Teknis</div>
+        <h3>SPESIFIKASI</h3>
+      </div>
+      <div class="spec-wrapper reveal">
+        <table class="spec-table">
+          <tr><td>Mekanik</td><td>Lengan aluminium ringan, tiang ABS, Servo MG995 (Torsi 7.35 Nm)</td></tr>
+          <tr><td>Kamera & Komputasi</td><td>IP Camera Resolusi Tinggi (LPR), NVIDIA Jetson / Mini PC (Edge AI)</td></tr>
+          <tr><td>Kontrol Gerbang</td><td>Arduino Nano R3 (Microcontroller Relay), Motor DC Gear</td></tr>
+          <tr><td>Sensor Pendukung</td><td>Ultrasonik, Infrared (IR) untuk deteksi presisi kendaraan</td></tr>
+          <tr><td>Backend & DB</td><td>AWS EC2 / DigitalOcean, SQL Database, Integrasi API Kampus</td></tr>
+          <tr><td>Kinerja Motor</td><td>Torsi dinamis 7.3575 Nm dengan perhitungan panjang nut min. 0.16 cm</td></tr>
+          <tr><td>Simulasi Uji</td><td>Matlab Simulink (Optimization & Data Acquisition Toolbox)</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- FITUR -->
+    <div class="sub-section">
+      <div class="sub-header">
+        <div class="sub-label">Keunggulan</div>
+        <h3>FITUR UTAMA</h3>
+      </div>
+      <div class="feature-list">
+        <div class="feature-row reveal" style="--delay:0.1s">
+          <div class="feature-ic"><i data-lucide="scan-line"></i></div>
+          <div class="feature-text">
+            <h4>Pengenalan Plat Otomatis (LPR)</h4>
+            <p>Membaca plat nomor kendaraan dalam hitungan milidetik secara *contactless* menggunakan kecerdasan buatan, menghilangkan kebutuhan tap kartu sepenuhnya.</p>
+          </div>
+        </div>
+        <div class="feature-row reveal" style="--delay:0.15s">
+          <div class="feature-ic"><i data-lucide="users"></i></div>
+          <div class="feature-text">
+            <h4>Multilevel Akses & Manajemen Tamu</h4>
+            <p>Perbedaan izin akses untuk civitas akademika, staf, serta kemampuan memberikan izin akses temporer berjangka waktu bagi tamu penting.</p>
+          </div>
+        </div>
+        <div class="feature-row reveal" style="--delay:0.2s">
+          <div class="feature-ic"><i data-lucide="leaf"></i></div>
+          <div class="feature-text">
+            <h4>Pendekatan Ramah Lingkungan & Skalabilitas</h4>
+            <p>Menghilangkan total ketergantungan pada penerbitan kartu plastik (KTM/RFID) yang mencemari lingkungan dan memakan biaya cetak terus-menerus.</p>
+          </div>
+        </div>
+        <div class="feature-row reveal" style="--delay:0.25s">
+          <div class="feature-ic"><i data-lucide="cpu"></i></div>
+          <div class="feature-text">
+            <h4>Arsitektur Minimum Viable Product (MVP)</h4>
+            <p>Sistem dirancang lebih kompleks di hulu (backend) menggunakan cloud server (AWS) agar beban pemrosesan keras di gerbang jauh lebih efisien dan ringan saat beroperasi.</p>
+          </div>
+        </div>
+        <div class="feature-row reveal" style="--delay:0.3s">
+          <div class="feature-ic"><i data-lucide="activity"></i></div>
+          <div class="feature-text">
+            <h4>Presisi Kinematika Tinggi</h4>
+            <p>Bukaan gerbang (0° hingga 90°) ditenagai oleh Servo MG995 yang diukur akurat via Simulink, meminimalisir delay saat kondisi sibuk.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARA KERJA -->
+    <div class="sub-section">
+      <div class="sub-header">
+        <div class="sub-label">Alur Sistem</div>
+        <h3>DIAGRAM ALIR (FLOWCHART)</h3>
+      </div>
+      
+      <div class="flowchart-wrap reveal" style="background: var(--card); border: 1px solid var(--border-med); border-radius: var(--radius-lg); padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+        <!-- Mermaid Diagram -->
+        <pre class="mermaid" style="display: flex; justify-content: center; background: transparent; border: none; font-size: 1.1rem;">
+flowchart TD
+    Start([MULAI]) --> Kondisi[Pengecekan Kondisi Portal]
+    Kondisi --> Deteksi[/Deteksi Kendaraan Masuk/]
+    Deteksi --> LPR[Pemindaian Plat LPR]
+    LPR --> Validasi{Data Valid?}
+    
+    Validasi -- TIDAK --> Tolak[Akses Ditolak & Alarm]
+    Validasi -- YA --> Buka[Servo Buka Portal]
+    
+    Tolak --> Selesai([SELESAI])
+    Buka --> Keluar[Kendaraan Keluar]
+    Keluar --> Tutup[Portal Menutup & Simpan Log]
+    Tutup --> Selesai
+        </pre>
+      </div>
+    </div>
+  </div>
+</section>

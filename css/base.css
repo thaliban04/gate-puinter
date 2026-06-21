@@ -1,0 +1,175 @@
+/* ==========================================================================
+   BASE — Variabel, Reset, Tipografi
+   Edit bagian :root untuk mengubah warna tema secara global
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ---- Warna Utama (Dark Mode — default) ---- */
+  --bg:         #080808;
+  --bg-subtle:  #0f0f0f;
+  --card:       #121212;
+  --card-hover: #181818;
+  --border:     rgba(255, 255, 255, 0.07);
+  --border-med: rgba(255, 255, 255, 0.12);
+
+  /* ---- Accent ---- */
+  --accent:     #3b82f6;
+  --accent-dim: rgba(59, 130, 246, 0.12);
+  --accent-glow:rgba(59, 130, 246, 0.25);
+
+  /* ---- Status Colors ---- */
+  --green:  #22c55e;
+  --red:    #ef4444;
+  --yellow: #f59e0b;
+  --purple: #a78bfa;
+
+  /* ---- Empathy Map Colors (Dark Mode) ---- */
+  --em-think: rgba(0, 180, 216, 0.15); /* cyan */
+  --em-hear:  rgba(153, 204, 51, 0.15); /* yellow-green */
+  --em-see:   rgba(255, 204, 0, 0.15); /* yellow */
+  --em-say:   rgba(153, 102, 255, 0.15); /* purple */
+  --em-pain:  rgba(239, 68, 68, 0.15); /* red */
+  --em-gain:  rgba(59, 130, 246, 0.15); /* blue */
+
+  /* ---- Teks ---- */
+  --text:   #f0f0f0;
+  --text2:  #888888;
+  --text3:  #555555;
+
+  /* ---- Layout ---- */
+  --sidebar-w: 240px;
+  --radius-sm: 8px;
+  --radius:    12px;
+  --radius-lg: 18px;
+
+  /* ---- Navbar background (dinamis per tema) ---- */
+  --navbar-bg: rgba(8, 8, 8, 0.88);
+}
+
+/* ========================================
+   LIGHT MODE TOKEN OVERRIDES
+   Aktif saat <html data-theme="light">
+   ======================================== */
+[data-theme="light"] {
+  --bg:         #f5f5f5;
+  --bg-subtle:  #ececec;
+  --card:       #ffffff;
+  --card-hover: #f0f0f0;
+  --border:     rgba(0, 0, 0, 0.07);
+  --border-med: rgba(0, 0, 0, 0.13);
+
+  --accent:     #2563eb;
+  --accent-dim: rgba(37, 99, 235, 0.10);
+  --accent-glow:rgba(37, 99, 235, 0.20);
+
+  --green:  #16a34a;
+  --red:    #dc2626;
+  --yellow: #d97706;
+  --purple: #7c3aed;
+
+  /* ---- Empathy Map Colors (Light Mode) ---- */
+  --em-think: #d0f0f0; /* cyan */
+  --em-hear:  #eef2cc; /* yellow-green */
+  --em-see:   #fff2cc; /* yellow */
+  --em-say:   #ead1f8; /* purple */
+  --em-pain:  #f8caca; /* red */
+  --em-gain:  #c8d0fb; /* blue */
+
+  --text:   #111111;
+  --text2:  #555555;
+  --text3:  #999999;
+
+  --navbar-bg: rgba(245, 245, 245, 0.90);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { display: block; max-width: 100%; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--text3); border-radius: var(--radius-sm); }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* Utilities */
+.text-accent  { color: var(--accent); }
+.text-dim     { color: var(--text2); }
+.fw-600       { font-weight: 600; }
+
+/* Tag / Chip label section */
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  border: 1px solid var(--accent-glow);
+  border-radius: var(--radius-sm);
+  padding: 5px 14px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  margin-bottom: 14px;
+}
+
+/* Tombol */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px var(--accent-glow);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--text2);
+  border: 1px solid var(--border-med);
+}
+.btn-outline:hover {
+  background: var(--card-hover);
+  color: var(--text);
+  border-color: var(--accent);
+}

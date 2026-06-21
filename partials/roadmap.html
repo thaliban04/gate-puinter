@@ -1,0 +1,164 @@
+<section id="userjourney" class="section ujm-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">Perjalanan Pengguna</div>
+      <h2>USER JOURNEY MAP</h2>
+    </div>
+
+    <!-- Persona Header Bar -->
+    <div class="ujm-persona-bar reveal">
+      <div class="ujm-avatar">🎓</div>
+      <div class="ujm-persona-info">
+        <strong>Personal</strong>
+        <div class="ujm-name">Efriza</div>
+        <div class="ujm-meta">22 Tahun · Mahasiswa</div>
+      </div>
+      <div class="ujm-divider"></div>
+      <div class="ujm-scenario-text">
+        <strong>Scenario</strong>
+        <p>Efriza merupakan mahasiswa Departemen Teknik Mesin yang memiliki mobilitas tinggi dalam aktivitas keluar-masuk area kampus. Pada skenario ini, Efriza memanfaatkan sistem Gate Puinter sebagai media akses terkontrol untuk keluar dan masuk kampus. Sistem ini berfungsi sebagai mekanisme autentikasi berbasis teknologi yang bertujuan meningkatkan keamanan, efisiensi akses, serta pencatatan data mobilitas pengguna secara real-time.</p>
+      </div>
+    </div>
+
+    <!-- Journey Table -->
+    <div class="ujm-wrap reveal">
+      <table class="ujm-table">
+        <thead>
+          <!-- Phase Row -->
+          <tr>
+            <th class="ujm-row-label" style="background:var(--card);border-color:var(--border-med);" rowspan="2"></th>
+            <th colspan="2" class="ujm-phase-cell ph-before">BEFORE</th>
+            <th colspan="2" class="ujm-phase-cell ph-during1">DURING</th>
+            <th colspan="2" class="ujm-phase-cell ph-during2">DURING</th>
+            <th colspan="2" class="ujm-phase-cell ph-during3">DURING</th>
+            <th colspan="2" class="ujm-phase-cell ph-during4">DURING</th>
+          </tr>
+          <!-- Step numbers (hidden visually, for structure) -->
+          <tr style="display:none">
+            <td></td><td></td><td></td><td></td><td></td>
+            <td></td><td></td><td></td><td></td><td></td>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- ROW 1: AKTIVITAS -->
+          <tr>
+            <td class="ujm-row-label">Aktivitas</td>
+            <td class="ujm-act before">DATANG<br>MEMASUKI<br>TEMPAT<br>(KAMPUS)</td>
+            <td class="ujm-act before">MENGAMATI<br>ALAT GATE<br>PUINTER</td>
+            <td class="ujm-act during1">MENEMPELKAN<br>JARI PADA<br>ALAT</td>
+            <td class="ujm-act during1">GERBANG<br>TERBUKA</td>
+            <td class="ujm-act during2">MEMASUKI<br>TEMPAT<br>(KAMPUS)</td>
+            <td class="ujm-act during2">MEMARKIRKAN<br>KENDARAAN</td>
+            <td class="ujm-act during3">MENUJU<br>GERBANG<br>KELUAR</td>
+            <td class="ujm-act during3">MENEMPELKAN<br>JARI KE ALAT</td>
+            <td class="ujm-act during4">GERBANG<br>TERBUKA</td>
+            <td class="ujm-act during4">KELUAR DARI<br>KAMPUS</td>
+          </tr>
+
+          <!-- ROW 2: DOKUMENTASI -->
+          <tr>
+            <td class="ujm-row-label">Dokumentasi</td>
+            <td class="ujm-doc-cell"><i data-lucide="image" style="width:18px;height:18px;opacity:0.25;"></i></td>
+            <td class="ujm-doc-cell"><i data-lucide="image" style="width:18px;height:18px;opacity:0.25;"></i></td>
+            <td class="ujm-doc-cell"><i data-lucide="image" style="width:18px;height:18px;opacity:0.25;"></i></td>
+            <td class="ujm-doc-cell"><i data-lucide="image" style="width:18px;height:18px;opacity:0.25;"></i></td>
+            <td class="ujm-doc-cell"><i data-lucide="image" style="width:18px;height:18px;opacity:0.25;"></i></td>
+            <td class="ujm-doc-cell"><i data-lucide="image" style="width:18px;height:18px;opacity:0.25;"></i></td>
+            <td class="ujm-doc-cell"><i data-lucide="image" style="width:18px;height:18px;opacity:0.25;"></i></td>
+            <td class="ujm-doc-cell"><i data-lucide="image" style="width:18px;height:18px;opacity:0.25;"></i></td>
+            <td class="ujm-doc-cell"><i data-lucide="image" style="width:18px;height:18px;opacity:0.25;"></i></td>
+            <td class="ujm-doc-cell"><i data-lucide="image" style="width:18px;height:18px;opacity:0.25;"></i></td>
+          </tr>
+
+          <!-- ROW 3: EMOTIONS + SVG LINE -->
+          <tr class="ujm-emotion-row">
+            <td class="ujm-row-label">Emotions</td>
+            <!-- Emotion + SVG curve spanning all 10 columns -->
+            <td colspan="10" style="padding:0; border:none; background:var(--bg);">
+              <div style="position:relative; width:100%; height:90px; overflow:visible;">
+                <!-- SVG curve line -->
+                <svg viewBox="0 0 1000 90" preserveAspectRatio="none" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible;" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Dotted baseline -->
+                  <line x1="50" y1="45" x2="950" y2="45" stroke="var(--border-med)" stroke-width="1" stroke-dasharray="4 4"/>
+                  <!-- Emotion curve: smooth bezier through points -->
+                  <!-- Points (x, y): 50,42 · 150,62 · 250,75 · 350,52 · 450,35 · 550,35 · 650,42 · 750,50 · 850,50 · 950,25 -->
+                  <path d="M50,42 C100,52 130,70 150,62 C170,55 200,78 250,75 C290,72 320,55 350,52 C380,49 420,35 450,35 C480,35 520,35 550,35 C590,35 620,40 650,42 C690,45 720,50 750,50 C790,50 820,50 850,50 C880,50 920,30 950,25"
+                        fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+                  <!-- Dots at each step -->
+                  <circle cx="50"  cy="42" r="5" fill="var(--accent)" opacity="0.8"/>
+                  <circle cx="150" cy="62" r="5" fill="var(--red)"    opacity="0.8"/>
+                  <circle cx="250" cy="75" r="5" fill="var(--red)"    opacity="0.9"/>
+                  <circle cx="350" cy="52" r="5" fill="var(--yellow)" opacity="0.8"/>
+                  <circle cx="450" cy="35" r="5" fill="var(--green)"  opacity="0.8"/>
+                  <circle cx="550" cy="35" r="5" fill="var(--green)"  opacity="0.8"/>
+                  <circle cx="650" cy="42" r="5" fill="var(--green)"  opacity="0.8"/>
+                  <circle cx="750" cy="50" r="5" fill="var(--yellow)" opacity="0.8"/>
+                  <circle cx="850" cy="50" r="5" fill="var(--yellow)" opacity="0.8"/>
+                  <circle cx="950" cy="25" r="5" fill="var(--green)"  opacity="0.9"/>
+                </svg>
+                <!-- Emoji labels positioned absolutely -->
+                <span style="position:absolute;top:4px; left:calc(5% - 16px); font-size:1.2rem;">🙂</span>
+                <span style="position:absolute;top:24px;left:calc(15% - 16px);font-size:1.2rem;">😕</span>
+                <span style="position:absolute;top:40px;left:calc(25% - 16px);font-size:1.2rem;">😠</span>
+                <span style="position:absolute;top:18px;left:calc(35% - 16px);font-size:1.2rem;">😐</span>
+                <span style="position:absolute;top:0px; left:calc(45% - 16px);font-size:1.2rem;">🙂</span>
+                <span style="position:absolute;top:0px; left:calc(55% - 16px);font-size:1.2rem;">🙂</span>
+                <span style="position:absolute;top:4px; left:calc(65% - 16px);font-size:1.2rem;">🙂</span>
+                <span style="position:absolute;top:14px;left:calc(75% - 16px);font-size:1.2rem;">😐</span>
+                <span style="position:absolute;top:14px;left:calc(85% - 16px);font-size:1.2rem;">😐</span>
+                <span style="position:absolute;top:0px; left:calc(95% - 16px);font-size:1.2rem;">😊</span>
+              </div>
+            </td>
+          </tr>
+
+          <!-- ROW 4: EXPERIENCE -->
+          <tr>
+            <td class="ujm-row-label">Experience</td>
+            <td class="ujm-exp before">USER<br>MEMASUKI<br>KAMPUS</td>
+            <td class="ujm-exp before">USER MERASA<br>BINGUNG<br>MENGGUNAKAN<br>ALAT</td>
+            <td class="ujm-exp during1">USER<br>MENEMPELKAN<br>JARI PADA<br>ALAT</td>
+            <td class="ujm-exp during1">USER<br>MENUNGGU<br>GERBANG<br>TERBUKA</td>
+            <td class="ujm-exp during2">USER<br>MEMASUKI<br>KAMPUS</td>
+            <td class="ujm-exp during2">USER<br>MEMARKIRKAN<br>KENDARAAN</td>
+            <td class="ujm-exp during3">USER<br>MENGELUAR<br>KAN<br>KENDARAANNYA</td>
+            <td class="ujm-exp during3">USER SUDAH<br>FAMILIAR<br>DENGAN<br>SISTEM</td>
+            <td class="ujm-exp during4">USER<br>MENUNGGU<br>GERBANG<br>TERBUKA</td>
+            <td class="ujm-exp during4">USER KELUAR<br>KAMPUS<br>DENGAN<br>SENANG</td>
+          </tr>
+
+          <!-- ROW 5: PROBLEM -->
+          <tr>
+            <td class="ujm-row-label">Problem</td>
+            <td class="ujm-prob">—</td>
+            <td class="ujm-prob has">Membutuhkan tanda cara penggunaan alat</td>
+            <td class="ujm-prob">—</td>
+            <td class="ujm-prob has">User membutuhkan sensor yang responsif</td>
+            <td class="ujm-prob">—</td>
+            <td class="ujm-prob">—</td>
+            <td class="ujm-prob">—</td>
+            <td class="ujm-prob">—</td>
+            <td class="ujm-prob has">User membutuhkan sensor yang responsif</td>
+            <td class="ujm-prob">—</td>
+          </tr>
+
+          <!-- ROW 6: CUSTOMER NEEDS -->
+          <tr>
+            <td class="ujm-row-label">Customer<br>Needs</td>
+            <td class="ujm-need">Panduan Arah Gate</td>
+            <td class="ujm-need">Stiker Instruksi Penggunaan</td>
+            <td class="ujm-need">Posisi Pemindai yang Ergonomis</td>
+            <td class="ujm-need">Tambahan Visual Loading Gate</td>
+            <td class="ujm-need">Rambu Hati-hati</td>
+            <td class="ujm-need">Tata Letak Parkir yang Tertata</td>
+            <td class="ujm-need">Alur Keluar yang Teratur</td>
+            <td class="ujm-need">Konsistensi Sensor Pemindai</td>
+            <td class="ujm-need">Rambu Hati-hati</td>
+            <td class="ujm-need">Jalan Keluar Tanpa Hambatan</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
