@@ -229,6 +229,8 @@ function openCropperModal(imageSrc, el) {
   modal.classList.add('show');
   document.body.classList.add('modal-open');
 
+  showToast('🖼️ Editor Gambar Terbuka!');
+
   if (cropper) cropper.destroy();
 
   const styles = window.getComputedStyle(el);
@@ -321,6 +323,8 @@ function openTextEditorModal(id) {
   
   modal.classList.add('show');
   document.body.classList.add('modal-open');
+
+  showToast('📝 Editor Data Kelompok Terbuka!');
 }
 
 function closeTextEditorModal() {

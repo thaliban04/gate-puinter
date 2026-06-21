@@ -135,6 +135,9 @@ function openContentEditorModal(el, id, type) {
   modal.classList.add('show');
   document.body.classList.add('modal-open'); // lock scroll
 
+  // Tampilkan notifikasi agar user tahu editor sudah terbuka
+  showToast('🛠️ Editor Rahasia Terbuka!');
+
   // Re-init lucide icons inside modal
   if (window.lucide) lucide.createIcons();
 }
