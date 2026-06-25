@@ -276,10 +276,23 @@ async function finishCropAndUpload() {
     maxWidth: 1024, maxHeight: 1024, fillColor: '#fff',
     imageSmoothingEnabled: true, imageSmoothingQuality: 'high',
   });
-  const b64 = canvas.toDataURL('image/png');
+  // Menggunakan webp untuk ukuran yang jauh lebih kecil (mencegah quota exceeded)
+  const b64 = canvas.toDataURL('image/webp', 0.8);
   closeCropperModal();
 
-  localStorage.setItem('gate-upload-' + currentUploadId, b64);
+  try {
+    localStorage.setItem('gate-upload-' + currentUploadId, b64);
+  } catch (e) {
+    console.warn("LocalStorage penuh, membersihkan cache gambar lama...");
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith('gate-upload-')) localStorage.removeItem(key);
+    });
+    try {
+      localStorage.setItem('gate-upload-' + currentUploadId, b64);
+    } catch(err) {
+      console.error("Gagal menyimpan ke LocalStorage setelah dibersihkan", err);
+    }
+  }
   let imgOverlay = currentUploaderEl.querySelector('.upload-overlay');
   if(imgOverlay) { imgOverlay.src = b64; imgOverlay.style.display = 'block'; }
   
