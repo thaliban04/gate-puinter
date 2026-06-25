@@ -23,8 +23,9 @@ document.addEventListener('modulesLoaded', () => {
     if (!imgOverlay) {
       imgOverlay = document.createElement('img');
       imgOverlay.className = 'upload-overlay';
-      // Mencegah gambar tertarik/gepeng, kita pakai object-fit cover
-      imgOverlay.style.cssText = 'position: absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:10; opacity:0; background:var(--card); pointer-events:none; transition: opacity 0.3s ease;';
+      // Mencegah gambar tertarik/gepeng, kita pakai object-fit cover (kecuali untuk blueprint yang butuh contain agar tidak terpotong)
+      const objectFit = (id === 'solution' || id.startsWith('doc-')) ? 'contain' : 'cover';
+      imgOverlay.style.cssText = `position: absolute; top:0; left:0; width:100%; height:100%; object-fit:${objectFit}; z-index:10; opacity:0; background:var(--card); pointer-events:none; transition: opacity 0.3s ease;`;
       if (id !== 'hero') {
         imgOverlay.loading = 'lazy';
       }
