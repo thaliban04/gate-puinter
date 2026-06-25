@@ -125,8 +125,23 @@ document.addEventListener('modulesLoaded', () => {
 // =============================================================================
 // GITHUB UPLOAD ENGINE
 // =============================================================================
+
+function getGitHubToken() {
+  let token = localStorage.getItem('gate-github-token');
+  if (!token) return null;
+  try {
+    let decoded = atob(token);
+    if (decoded.match(/^(ghp_|github_pat_|gho_|ghu_|ghs_|ghr_)/)) return decoded;
+  } catch(e) {}
+  return token;
+}
+
+function setGitHubToken(token) {
+  localStorage.setItem('gate-github-token', btoa(token.trim()));
+}
+
 async function uploadToGitHub(id, base64Data) {
-  const token = localStorage.getItem('gate-github-token');
+  const token = getGitHubToken();
   if (!token) return false;
   
   // Ekstrak base64 murni tanpa prefix
@@ -161,8 +176,7 @@ async function uploadToGitHub(id, base64Data) {
 }
 
 async function uploadTextToGitHub(id, textContent) {
-  let token = localStorage.getItem('gate-github-token');
-  if (token && !token.startsWith('gh')) token = atob(token); // Decode jika Base64
+  const token = getGitHubToken();
   if (!token) return false;
   
   // Encode string ke base64 (UTF-8 safe)
@@ -200,17 +214,13 @@ async function uploadTextToGitHub(id, textContent) {
 // IMAGE CROPPER LOGIC
 // =============================================================================
 async function startUploadProcess(el, id) {
-  let token = localStorage.getItem('gate-github-token');
-  if (token && !token.startsWith('gh')) {
-    try { token = atob(token); } catch(e) { token = null; }
-  }
+  let token = getGitHubToken();
   if (!token) {
     token = prompt("🔒 FITUR ADMIN RAHASIA 🔒\n\nMasukkan 'GitHub Access Token':");
     if (!token || token.trim() === "") return;
-    localStorage.setItem('gate-github-token', btoa(token.trim()));
-  } else if (token.startsWith('ghp_')) {
-    // Migrate plaintext token to base64
-    localStorage.setItem('gate-github-token', btoa(token));
+    setGitHubToken(token);
+  } else {
+    setGitHubToken(token); // Ensure it is stored as base64
   }
   
   currentUploadId = id;
@@ -307,11 +317,11 @@ function renderTeamTable(jsonStr) {
 }
 
 function openTextEditorModal(id) {
-  let token = localStorage.getItem('gate-github-token');
+  let token = getGitHubToken();
   if (!token) {
     token = prompt("🔒 FITUR ADMIN RAHASIA 🔒\n\nMasukkan 'GitHub Access Token':");
     if (!token || token.trim() === "") return;
-    localStorage.setItem('gate-github-token', token.trim());
+    setGitHubToken(token);
   }
 
   currentTextUploadId = id;
